@@ -1,0 +1,18 @@
+{
+  "language": "aa",
+  "extendedLanguageSubtags": [
+    "bbb",
+    "ccc"
+  ],
+  "script": null,
+  "region": null,
+  "variants": [
+    "1111",
+    "ccccc",
+    "b1b1b"
+  ],
+  "extensions": [],
+  "privateuse": [],
+  "irregular": null,
+  "regular": null
+}

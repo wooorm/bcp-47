@@ -1,0 +1,19 @@
+{
+  "language": "de",
+  "extendedLanguageSubtags": [],
+  "script": null,
+  "region": "DE",
+  "variants": [],
+  "extensions": [
+    {
+      "singleton": "u",
+      "extensions": [
+        "co",
+        "phonebk"
+      ]
+    }
+  ],
+  "privateuse": [],
+  "irregular": null,
+  "regular": null
+}

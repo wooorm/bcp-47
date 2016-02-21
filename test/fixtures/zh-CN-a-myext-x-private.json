@@ -1,0 +1,20 @@
+{
+  "language": "zh",
+  "extendedLanguageSubtags": [],
+  "script": null,
+  "region": "CN",
+  "variants": [],
+  "extensions": [
+    {
+      "singleton": "a",
+      "extensions": [
+        "myext"
+      ]
+    }
+  ],
+  "privateuse": [
+    "private"
+  ],
+  "irregular": null,
+  "regular": null
+}

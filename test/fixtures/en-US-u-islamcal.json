@@ -1,0 +1,18 @@
+{
+  "language": "en",
+  "extendedLanguageSubtags": [],
+  "script": null,
+  "region": "US",
+  "variants": [],
+  "extensions": [
+    {
+      "singleton": "u",
+      "extensions": [
+        "islamcal"
+      ]
+    }
+  ],
+  "privateuse": [],
+  "irregular": null,
+  "regular": null
+}

@@ -1,0 +1,24 @@
+{
+  "language": "en",
+  "extendedLanguageSubtags": [],
+  "script": null,
+  "region": null,
+  "variants": [],
+  "extensions": [
+    {
+      "singleton": "a",
+      "extensions": [
+        "myext"
+      ]
+    },
+    {
+      "singleton": "b",
+      "extensions": [
+        "another"
+      ]
+    }
+  ],
+  "privateuse": [],
+  "irregular": null,
+  "regular": null
+}

@@ -1,0 +1,29 @@
+{
+  "language": "aaa",
+  "extendedLanguageSubtags": [
+    "bbb",
+    "ccc",
+    "ddd"
+  ],
+  "script": "abcd",
+  "region": "123",
+  "variants": [
+    "abc123",
+    "0abc"
+  ],
+  "extensions": [
+    {
+      "singleton": "b",
+      "extensions": [
+        "01",
+        "abc123"
+      ]
+    }
+  ],
+  "privateuse": [
+    "01ab",
+    "abc12"
+  ],
+  "irregular": null,
+  "regular": null
+}
