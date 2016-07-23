@@ -38,7 +38,7 @@
     "remark-github": "^4.0.1",
     "remark-lint": "^3.0.0",
     "remark-usage": "^3.0.0",
-    "remark-validate-links": "^3.0.0",
+    "remark-validate-links": "^4.1.0",
     "retext": "^1.0.0",
     "tape": "^4.4.0"
   },
