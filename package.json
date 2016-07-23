@@ -12,46 +12,78 @@
     "tag",
     "parse"
   ],
-  "dependencies": {},
   "files": [
-    "index.js"
+    "index.js",
+    "lib/"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wooorm/bcp-47.git"
-  },
+  "repository": "https://github.com/wooorm/bcp-47",
   "bugs": "https://github.com/wooorm/bcp-47/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
   ],
+  "dependencies": {
+    "has": "^1.0.1",
+    "is-alphabetical": "^1.0.0",
+    "is-alphanumerical": "^1.0.0",
+    "is-decimal": "^1.0.0"
+  },
   "devDependencies": {
-    "browserify": "^13.0.0",
-    "chalk": "^1.0.0",
-    "eslint": "^2.0.0",
+    "browserify": "^13.0.1",
     "esmangle": "^1.0.1",
-    "istanbul": "^0.4.0",
-    "jscs": "^2.0.0",
-    "jscs-jsdoc": "^1.0.0",
-    "remark": "^4.0.0",
-    "remark-comment-config": "^3.0.0",
-    "remark-github": "^4.0.1",
-    "remark-lint": "^3.0.0",
-    "remark-usage": "^3.0.0",
-    "remark-validate-links": "^3.0.0",
-    "retext": "^1.0.0",
-    "tape": "^4.4.0"
+    "nyc": "^7.0.0",
+    "remark-cli": "^1.0.0",
+    "remark-comment-config": "^4.0.0",
+    "remark-github": "^5.0.0",
+    "remark-lint": "^4.0.0",
+    "remark-usage": "^4.0.0",
+    "remark-validate-links": "^4.0.0",
+    "tape": "^4.0.0",
+    "xo": "^0.16.0"
   },
   "scripts": {
     "build-md": "remark . --quiet --frail",
     "build-bundle": "browserify index.js --bare -s bcp47 > bcp-47.js",
     "build-mangle": "esmangle bcp-47.js > bcp-47.min.js",
     "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
-    "lint-api": "eslint .",
-    "lint-style": "jscs --reporter inline .",
-    "lint": "npm run lint-api && npm run lint-style",
-    "test-api": "node test/index.js",
-    "test-coverage": "istanbul cover test/index.js",
+    "lint": "xo",
+    "test-api": "node test",
+    "test-coverage": "nyc --reporter lcov tape test",
     "test": "npm run build && npm run lint && npm run test-coverage"
+  },
+  "xo": {
+    "space": true,
+    "rules": {
+      "complexity": "off",
+      "eqeqeq": "off",
+      "no-eq-null": "off",
+      "max-lines": "off"
+    },
+    "ignores": [
+      "bcp-47.js",
+      "bcp-47.min.js"
+    ]
+  },
+  "remarkConfig": {
+    "output": true,
+    "plugins": {
+      "comment-config": null,
+      "github": null,
+      "usage": null,
+      "lint": {
+        "heading-increment": false,
+        "list-item-spacing": false,
+        "no-duplicate-headings": false,
+        "no-missing-blank-lines": false
+      },
+      "toc": {
+        "tight": true,
+        "maxDepth": 3
+      },
+      "validate-links": null
+    },
+    "settings": {
+      "bullet": "*"
+    }
   }
 }
