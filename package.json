@@ -35,7 +35,7 @@
     "remark-cli": "^2.0.0",
     "remark-preset-wooorm": "^1.0.0",
     "tape": "^4.0.0",
-    "xo": "^0.16.0"
+    "xo": "^0.17.0"
   },
   "scripts": {
     "build-md": "remark . --quiet --frail",
@@ -50,6 +50,8 @@
   "xo": {
     "space": true,
     "rules": {
+      "unicorn/explicit-length-check": "off",
+      "import/no-unassigned-import": "off",
       "complexity": "off",
       "eqeqeq": "off",
       "no-eq-null": "off",
