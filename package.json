@@ -35,7 +35,7 @@
     "remark-cli": "^3.0.0",
     "remark-preset-wooorm": "^2.0.0",
     "tape": "^4.0.0",
-    "xo": "^0.17.0"
+    "xo": "^0.18.0"
   },
   "scripts": {
     "build-md": "remark . -qfo",
@@ -49,6 +49,7 @@
   },
   "xo": {
     "space": true,
+    "esnext": false,
     "rules": {
       "unicorn/explicit-length-check": "off",
       "import/no-unassigned-import": "off",
@@ -58,8 +59,7 @@
       "max-lines": "off"
     },
     "ignores": [
-      "bcp-47.js",
-      "bcp-47.min.js"
+      "bcp-47.js"
     ]
   },
   "remarkConfig": {
