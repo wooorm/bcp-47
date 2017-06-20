@@ -43,7 +43,7 @@
     "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
     "lint": "xo",
     "test-api": "node test",
-    "test-coverage": "nyc --reporter lcov tape test",
+    "test-coverage": "nyc --reporter lcov tape test/index.js",
     "test": "npm run build && npm run lint && npm run test-coverage"
   },
   "xo": {
@@ -61,7 +61,15 @@
       "bcp-47.js"
     ]
   },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
+  },
   "remarkConfig": {
-    "plugins": ["preset-wooorm"]
+    "plugins": [
+      "preset-wooorm"
+    ]
   }
 }
