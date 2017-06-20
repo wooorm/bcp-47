@@ -12,18 +12,17 @@
     "tag",
     "parse"
   ],
-  "files": [
-    "index.js",
-    "lib/"
-  ],
   "repository": "https://github.com/wooorm/bcp-47",
   "bugs": "https://github.com/wooorm/bcp-47/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
     "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
   ],
+  "files": [
+    "index.js",
+    "lib/"
+  ],
   "dependencies": {
-    "has": "^1.0.1",
     "is-alphabetical": "^1.0.0",
     "is-alphanumerical": "^1.0.0",
     "is-decimal": "^1.0.0"
