@@ -4,7 +4,7 @@ Parse and stringify [BCP 47][spec] language tags.
 
 ## Installation
 
-[npm][npm-install]:
+[npm][]:
 
 ```bash
 npm install bcp-47
@@ -22,46 +22,28 @@ npm install bcp-47
 
 ## Usage
 
-Dependencies:
-
 ```javascript
 var bcp47 = require('bcp-47');
-```
 
-Parsing:
-
-```javascript
 var schema = bcp47.parse('hy-Latn-IT-arevela');
+
+console.log(schema);
+console.log(bcp47.stringify(schema));
 ```
 
 Yields:
 
-```json
-{
-  "language": "hy",
-  "extendedLanguageSubtags": [],
-  "script": "Latn",
-  "region": "IT",
-  "variants": [
-    "arevela"
-  ],
-  "extensions": [],
-  "privateuse": [],
-  "irregular": null,
-  "regular": null
-}
-```
-
-Compiling:
-
-```javascript
-var tag = bcp47.stringify(schema);
-```
-
-Yields:
-
-```txt
-hy-Latn-IT-arevela
+```js
+{ language: 'hy',
+  extendedLanguageSubtags: [],
+  script: 'Latn',
+  region: 'IT',
+  variants: [ 'arevela' ],
+  extensions: [],
+  privateuse: [],
+  irregular: null,
+  regular: null }
+'hy-Latn-IT-arevela'
 ```
 
 ## API
@@ -239,7 +221,7 @@ Invoked when an error occurs.
 
 [codecov]: https://codecov.io/github/wooorm/bcp-47
 
-[npm-install]: https://docs.npmjs.com/cli/install
+[npm]: https://docs.npmjs.com/cli/install
 
 [license]: LICENSE
 
