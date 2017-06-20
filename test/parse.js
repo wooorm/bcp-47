@@ -1,18 +1,8 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module bcp-47
- * @fileoverview Test suite for `bcp-47`.
- */
-
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var bcp47 = require('..');
 
-/* Tests. */
 test('.parse()', function (t) {
   t.equal(typeof bcp47.parse, 'function', 'should be a method');
 
@@ -25,12 +15,10 @@ test('.parse()', function (t) {
   }, 'should throw when given `null`');
 
   t.doesNotThrow(function () {
-    bcp47.parse({
-      /** Stringify. */
-      toString: function () {
-        return 'en';
-      }
-    });
+    bcp47.parse({toString: toString});
+    function toString() {
+      return 'en';
+    }
   }, 'should coerce to a string');
 
   t.deepEqual(
@@ -102,20 +90,6 @@ test('.parse()', function (t) {
 
     st.plan(6);
 
-    /**
-     * Handle the warnings.
-     */
-    function warning() {
-      st.equal(
-        arguments[0],
-        'Too long variant, expected at most 8 characters'
-      );
-
-      st.equal(arguments[1], 1);
-      st.equal(arguments[2], 15);
-      st.equal(arguments.length, 3);
-    }
-
     st.deepEqual(
       bcp47.parse(fixture, {warning: warning}),
       {
@@ -131,6 +105,13 @@ test('.parse()', function (t) {
       },
       'should return `null`'
     );
+
+    function warning() {
+      st.equal(arguments[0], 'Too long variant, expected at most 8 characters');
+      st.equal(arguments[1], 1);
+      st.equal(arguments[2], 15);
+      st.equal(arguments.length, 3);
+    }
 
     st.deepEqual(
       bcp47.parse(fixture, {forgiving: true}),
@@ -147,29 +128,12 @@ test('.parse()', function (t) {
       },
       'should return untill the error when `forgiving: true`'
     );
-
-    st.end();
   });
 
   t.test('Too many subtags', function (st) {
     var fixture = 'aa-bbb-ccc-ddd-eee';
 
     st.plan(6);
-
-    /**
-     * Handle the warnings.
-     */
-    function warning() {
-      st.equal(
-        arguments[0],
-        'Too many extended language subtags, ' +
-        'expected at most 3 subtags'
-      );
-
-      st.equal(arguments[1], 3);
-      st.equal(arguments[2], 14);
-      st.equal(arguments.length, 3);
-    }
 
     st.deepEqual(
       bcp47.parse(fixture, {warning: warning}),
@@ -186,6 +150,13 @@ test('.parse()', function (t) {
       },
       'should return `null`'
     );
+
+    function warning() {
+      st.equal(arguments[0], 'Too many extended language subtags, expected at most 3 subtags');
+      st.equal(arguments[1], 3);
+      st.equal(arguments[2], 14);
+      st.equal(arguments.length, 3);
+    }
 
     st.deepEqual(
       bcp47.parse('aa-bbb-ccc-ddd-eee', {forgiving: true}),
@@ -213,20 +184,6 @@ test('.parse()', function (t) {
 
     st.plan(6);
 
-    /**
-     * Handle the warnings.
-     */
-    function warning() {
-      st.equal(
-        arguments[0],
-        'Too long extension, expected at most 8 characters'
-      );
-
-      st.equal(arguments[1], 2);
-      st.equal(arguments[2], 13);
-      st.equal(arguments.length, 3);
-    }
-
     st.deepEqual(
       bcp47.parse(fixture, {warning: warning}),
       {
@@ -243,6 +200,13 @@ test('.parse()', function (t) {
       'should return `null`'
     );
 
+    function warning() {
+      st.equal(arguments[0], 'Too long extension, expected at most 8 characters');
+      st.equal(arguments[1], 2);
+      st.equal(arguments[2], 13);
+      st.equal(arguments.length, 3);
+    }
+
     st.deepEqual(
       bcp47.parse(fixture, {forgiving: true}),
       {
@@ -258,8 +222,6 @@ test('.parse()', function (t) {
       },
       'should return untill the error when `forgiving: true`'
     );
-
-    st.end();
   });
 
   t.test('Empty extension', function (st) {
@@ -267,21 +229,6 @@ test('.parse()', function (t) {
 
     st.plan(6);
 
-    /**
-     * Handle the warnings.
-     */
-    function warning() {
-      st.equal(
-        arguments[0],
-        'Empty extension, extensions must have ' +
-        'at least 2 characters of content'
-      );
-
-      st.equal(arguments[1], 4);
-      st.equal(arguments[2], 4);
-      st.equal(arguments.length, 3);
-    }
-
     st.deepEqual(
       bcp47.parse(fixture, {warning: warning}),
       {
@@ -298,6 +245,13 @@ test('.parse()', function (t) {
       'should return `null`'
     );
 
+    function warning() {
+      st.equal(arguments[0], 'Empty extension, extensions must have at least 2 characters of content');
+      st.equal(arguments[1], 4);
+      st.equal(arguments[2], 4);
+      st.equal(arguments.length, 3);
+    }
+
     st.deepEqual(
       bcp47.parse(fixture, {forgiving: true}),
       {
@@ -313,8 +267,6 @@ test('.parse()', function (t) {
       },
       'should return untill the error when `forgiving: true`'
     );
-
-    st.end();
   });
 
   t.test('Too long private-use', function (st) {
@@ -322,21 +274,6 @@ test('.parse()', function (t) {
 
     st.plan(6);
 
-    /**
-     * Handle the warnings.
-     */
-    function warning() {
-      st.equal(
-          arguments[0],
-          'Too long private-use area, expected at most ' +
-          '8 characters'
-      );
-
-      st.equal(arguments[1], 5);
-      st.equal(arguments[2], 13);
-      st.equal(arguments.length, 3);
-    }
-
     st.deepEqual(
       bcp47.parse(fixture, {warning: warning}),
       {
@@ -352,6 +289,13 @@ test('.parse()', function (t) {
       },
       'should return `null`'
     );
+
+    function warning() {
+      st.equal(arguments[0], 'Too long private-use area, expected at most 8 characters');
+      st.equal(arguments[1], 5);
+      st.equal(arguments[2], 13);
+      st.equal(arguments.length, 3);
+    }
 
     st.deepEqual(
       bcp47.parse(fixture, {forgiving: true}),
@@ -368,28 +312,12 @@ test('.parse()', function (t) {
       },
       'should return untill the error when `forgiving: true`'
     );
-
-    st.end();
   });
 
   t.test('Extra content', function (st) {
     var fixture = 'abcdefghijklmnopqrstuvwxyz';
 
     st.plan(6);
-
-    /**
-     * Handle the warnings.
-     */
-    function warning() {
-      st.equal(
-        arguments[0],
-        'Found superfluous content after tag'
-      );
-
-      st.equal(arguments[1], 6);
-      st.equal(arguments[2], 0);
-      st.equal(arguments.length, 3);
-    }
 
     st.deepEqual(
       bcp47.parse(fixture, {warning: warning}),
@@ -407,6 +335,13 @@ test('.parse()', function (t) {
       'should return `null`'
     );
 
+    function warning() {
+      st.equal(arguments[0], 'Found superfluous content after tag');
+      st.equal(arguments[1], 6);
+      st.equal(arguments[2], 0);
+      st.equal(arguments.length, 3);
+    }
+
     st.deepEqual(
       bcp47.parse(fixture, {forgiving: true}),
       {
@@ -422,8 +357,6 @@ test('.parse()', function (t) {
       },
       'should return untill the error when `forgiving: true`'
     );
-
-    st.end();
   });
 
   t.end();

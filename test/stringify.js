@@ -1,18 +1,8 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module bcp-47
- * @fileoverview Test suite for `bcp-47`.
- */
-
 'use strict';
 
-/* Dependencies. */
 var test = require('tape');
 var bcp47 = require('..');
 
-/* Tests. */
 test('.stringify()', function (t) {
   t.equal(typeof bcp47.stringify, 'function', 'should be a method');
 

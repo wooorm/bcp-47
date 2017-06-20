@@ -1,25 +1,14 @@
-/**
- * @author Titus Wormer
- * @copyright 2016 Titus Wormer
- * @license MIT
- * @module bcp-47
- * @fileoverview Test suite for `bcp-47`.
- */
-
 'use strict';
 
-/* Dependencies. */
 var fs = require('fs');
 var path = require('path');
 var test = require('tape');
 var bcp47 = require('..');
 
-/* Methods. */
 var join = path.join;
 var read = fs.readFileSync;
 var dir = fs.readdirSync;
 
-/* Fixtures. */
 test('fixtures', function (t) {
   var base = join(__dirname, 'fixtures');
 
