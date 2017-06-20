@@ -151,15 +151,15 @@ different by the algorithm.
 
 Valid values are:
 
-*   `art-lojban`;
-*   `cel-gaulish`;
-*   `no-bok`;
-*   `no-nyn`;
-*   `zh-guoyu`;
-*   `zh-hakka`;
-*   `zh-min`;
-*   `zh-min-nan`;
-*   `zh-xiang`.
+*   `art-lojban`
+*   `cel-gaulish`
+*   `no-bok`
+*   `no-nyn`
+*   `zh-guoyu`
+*   `zh-hakka`
+*   `zh-min`
+*   `zh-min-nan`
+*   `zh-xiang`
 
 ###### `schema.irregular`
 
@@ -168,23 +168,23 @@ invalid by the algorithm).
 
 Valid values are:
 
-*   `en-GB-oed`;
-*   `i-ami`;
-*   `i-bnn`;
-*   `i-default`;
-*   `i-enochian`;
-*   `i-hak`;
-*   `i-klingon`;
-*   `i-lux`;
-*   `i-mingo`;
-*   `i-navajo`;
-*   `i-pwn`;
-*   `i-tao`;
-*   `i-tay`;
-*   `i-tsu`;
-*   `sgn-BE-FR`;
-*   `sgn-BE-NL`;
-*   `sgn-CH-DE`.
+*   `en-GB-oed`
+*   `i-ami`
+*   `i-bnn`
+*   `i-default`
+*   `i-enochian`
+*   `i-hak`
+*   `i-klingon`
+*   `i-lux`
+*   `i-mingo`
+*   `i-navajo`
+*   `i-pwn`
+*   `i-tao`
+*   `i-tay`
+*   `i-tsu`
+*   `sgn-BE-FR`
+*   `sgn-BE-NL`
+*   `sgn-CH-DE`
 
 ### `function warning(reason, code, offset)`
 
@@ -192,9 +192,9 @@ Invoked when an error occurs.
 
 ###### Parameters
 
-*   `reason` (`string`) — English reason for failure;
-*   `code` (`number`) — Code for failure;
-*   `offset` (`number`) — Index-based position of error.
+*   `reason` (`string`) — English reason for failure
+*   `code` (`number`) — Code for failure
+*   `offset` (`number`) — Index-based position of error
 
 ###### Warnings
 
