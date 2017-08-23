@@ -30,6 +30,8 @@
   "devDependencies": {
     "browserify": "^14.1.0",
     "esmangle": "^1.0.1",
+    "is-hidden": "^1.1.1",
+    "not": "^0.1.0",
     "nyc": "^11.0.0",
     "remark-cli": "^3.0.0",
     "remark-preset-wooorm": "^3.0.0",
@@ -49,14 +51,6 @@
   "xo": {
     "space": true,
     "esnext": false,
-    "rules": {
-      "unicorn/explicit-length-check": "off",
-      "import/no-unassigned-import": "off",
-      "complexity": "off",
-      "eqeqeq": "off",
-      "no-eq-null": "off",
-      "max-lines": "off"
-    },
     "ignores": [
       "bcp-47.js"
     ]
