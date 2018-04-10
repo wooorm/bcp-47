@@ -23,12 +23,12 @@ npm install bcp-47
 ## Usage
 
 ```javascript
-var bcp47 = require('bcp-47');
+var bcp47 = require('bcp-47')
 
-var schema = bcp47.parse('hy-Latn-IT-arevela');
+var schema = bcp47.parse('hy-Latn-IT-arevela')
 
-console.log(schema);
-console.log(bcp47.stringify(schema));
+console.log(schema)
+console.log(bcp47.stringify(schema))
 ```
 
 Yields:
