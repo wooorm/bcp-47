@@ -36,11 +36,11 @@
     "prettier": "^1.11.0",
     "remark-cli": "^5.0.0",
     "remark-preset-wooorm": "^4.0.0",
-    "standard": "^11.0.1",
-    "tape": "^4.0.0"
+    "tape": "^4.0.0",
+    "xo": "^0.20.3"
   },
   "scripts": {
-    "format": "remark . -qfo && standard --fix && prettier --write **/*.js",
+    "format": "remark . -qfo && prettier --write **/*.js && xo --fix",
     "build-bundle": "browserify index.js --bare -s bcp47 > bcp-47.js",
     "build-mangle": "esmangle bcp-47.js > bcp-47.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
@@ -49,9 +49,21 @@
     "test": "npm run format && npm run build && npm run test-coverage"
   },
   "prettier": {
+    "tabWidth": 2,
+    "useTabs": false,
     "singleQuote": true,
     "bracketSpacing": false,
-    "semi": false
+    "semi": false,
+    "trailingComma": "none"
+  },
+  "xo": {
+    "prettier": true,
+    "esnext": false,
+    "rules": {
+      "no-var": "off",
+      "prefer-arrow-callback": "off",
+      "object-shorthand": "off"
+    }
   },
   "nyc": {
     "check-coverage": true,
