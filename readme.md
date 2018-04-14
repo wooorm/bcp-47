@@ -38,7 +38,7 @@ Yields:
   extendedLanguageSubtags: [],
   script: 'Latn',
   region: 'IT',
-  variants: [ 'arevela' ],
+  variants: ['arevela'],
   extensions: [],
   privateuse: [],
   irregular: null,
