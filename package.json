@@ -1,6 +1,6 @@
 {
   "name": "bcp-47",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Parse and stringify BCP 47 language tags",
   "license": "MIT",
   "keywords": [
