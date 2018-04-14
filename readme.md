@@ -78,7 +78,7 @@ When given, `warning` is invoked when an error is encountered
 
 ###### Returns
 
-[`Schema`][schema].
+[`Schema`][schema] — Parsed BCP 47 language tag.
 
 ###### Throws
 
