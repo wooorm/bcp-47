@@ -5,3 +5,4 @@ coverage/
 node_modules/
 bcp-47.js
 bcp-47.min.js
+yarn.lock
