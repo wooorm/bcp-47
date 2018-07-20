@@ -10,8 +10,7 @@ var bcp47 = require('..')
 test('fixtures', function(t) {
   var base = path.join(__dirname, 'fixtures')
 
-  fs
-    .readdirSync(base)
+  fs.readdirSync(base)
     .filter(not(hidden))
     .forEach(check)
 
