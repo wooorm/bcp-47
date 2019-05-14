@@ -59,11 +59,9 @@
   "xo": {
     "prettier": true,
     "esnext": false,
-    "rules": {
-      "no-var": "off",
-      "prefer-arrow-callback": "off",
-      "object-shorthand": "off"
-    }
+    "ignores": [
+      "bcp-47.js"
+    ]
   },
   "nyc": {
     "check-coverage": true,
