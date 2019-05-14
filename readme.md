@@ -1,4 +1,9 @@
-# bcp-47 [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+# bcp-47
+
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
 
 Parse and stringify [BCP 47][spec] language tags.
 
@@ -213,13 +218,21 @@ Invoked when an error occurs.
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/bcp-47.svg
+[build-badge]: https://img.shields.io/travis/wooorm/bcp-47.svg
 
-[travis]: https://travis-ci.org/wooorm/bcp-47
+[build]: https://travis-ci.org/wooorm/bcp-47
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/bcp-47.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/bcp-47.svg
 
-[codecov]: https://codecov.io/github/wooorm/bcp-47
+[coverage]: https://codecov.io/github/wooorm/bcp-47
+
+[downloads-badge]: https://img.shields.io/npm/dm/bcp-47.svg
+
+[downloads]: https://www.npmjs.com/package/bcp-47
+
+[size-badge]: https://img.shields.io/bundlephobia/minzip/bcp-47.svg
+
+[size]: https://bundlephobia.com/result?p=bcp-47
 
 [npm]: https://docs.npmjs.com/cli/install
 
