@@ -225,7 +225,7 @@ Invoked when an error occurs.
 
 [license]: license
 
-[author]: http://wooorm.com
+[author]: https://wooorm.com
 
 [spec]: https://tools.ietf.org/html/bcp47
 
