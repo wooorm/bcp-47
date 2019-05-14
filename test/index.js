@@ -4,3 +4,4 @@
 require('./parse')
 require('./stringify')
 require('./fixtures')
+/* eslint-enable import/no-unassigned-import */
