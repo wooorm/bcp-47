@@ -19,10 +19,10 @@ npm install bcp-47
 
 *   [Usage](#usage)
 *   [API](#api)
-    *   [bcp47.parse(tag\[, options\])](#bcp47parsetag-options)
-    *   [bcp47.stringify(schema)](#bcp47stringifyschema)
-    *   [schema](#schema)
-    *   [function warning(reason, code, offset)](#function-warningreason-code-offset)
+    *   [`bcp47.parse(tag[, options])`](#bcp47parsetag-options)
+    *   [`bcp47.stringify(schema)`](#bcp47stringifyschema)
+    *   [`schema`](#schema)
+    *   [`function warning(reason, code, offset)`](#function-warningreason-code-offset)
 *   [License](#license)
 
 ## Usage

@@ -33,11 +33,11 @@
     "not": "^0.1.0",
     "nyc": "^14.0.0",
     "prettier": "^1.11.0",
-    "remark-cli": "^6.0.0",
-    "remark-preset-wooorm": "^4.0.0",
+    "remark-cli": "^7.0.0",
+    "remark-preset-wooorm": "^6.0.0",
     "tape": "^4.0.0",
     "tinyify": "^2.4.3",
-    "xo": "^0.24.0"
+    "xo": "^0.25.0"
   },
   "scripts": {
     "format": "remark . -qfo && prettier --write \"**/*.js\" && xo --fix",
@@ -59,6 +59,9 @@
   "xo": {
     "prettier": true,
     "esnext": false,
+    "rules": {
+      "unicorn/prefer-includes": "off"
+    },
     "ignores": [
       "bcp-47.js"
     ]
