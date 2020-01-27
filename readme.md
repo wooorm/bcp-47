@@ -7,7 +7,7 @@
 
 Parse and stringify [BCP 47][spec] language tags.
 
-## Installation
+## Install
 
 [npm][]:
 
@@ -15,9 +15,9 @@ Parse and stringify [BCP 47][spec] language tags.
 npm install bcp-47
 ```
 
-## Table of Contents
+## Contents
 
-*   [Usage](#usage)
+*   [Use](#use)
 *   [API](#api)
     *   [`bcp47.parse(tag[, options])`](#bcp47parsetag-options)
     *   [`bcp47.stringify(schema)`](#bcp47stringifyschema)
@@ -25,9 +25,9 @@ npm install bcp-47
     *   [`function warning(reason, code, offset)`](#function-warningreason-code-offset)
 *   [License](#license)
 
-## Usage
+## Use
 
-```javascript
+```js
 var bcp47 = require('bcp-47')
 
 var schema = bcp47.parse('hy-Latn-IT-arevela')
