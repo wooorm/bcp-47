@@ -3,7 +3,7 @@
 var test = require('tape')
 var bcp47 = require('..')
 
-test('.stringify()', function(t) {
+test('.stringify()', function (t) {
   t.equal(typeof bcp47.stringify, 'function', 'should be a method')
 
   t.equal(

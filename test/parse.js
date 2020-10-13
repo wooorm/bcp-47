@@ -3,18 +3,18 @@
 var test = require('tape')
 var bcp47 = require('..')
 
-test('.parse()', function(t) {
+test('.parse()', function (t) {
   t.equal(typeof bcp47.parse, 'function', 'should be a method')
 
-  t.throws(function() {
+  t.throws(function () {
     bcp47.parse()
   }, 'should throw when given `undefined`')
 
-  t.throws(function() {
+  t.throws(function () {
     bcp47.parse(null)
   }, 'should throw when given `null`')
 
-  t.doesNotThrow(function() {
+  t.doesNotThrow(function () {
     bcp47.parse({toString: toString})
     function toString() {
       return 'en'
@@ -85,7 +85,7 @@ test('.parse()', function(t) {
     'should return a regular when not normalizable'
   )
 
-  t.test('Too long variant', function(st) {
+  t.test('Too long variant', function (st) {
     var fixture = 'en-GB-abcdefghi'
 
     st.plan(6)
@@ -130,7 +130,7 @@ test('.parse()', function(t) {
     )
   })
 
-  t.test('Too many subtags', function(st) {
+  t.test('Too many subtags', function (st) {
     var fixture = 'aa-bbb-ccc-ddd-eee'
 
     st.plan(6)
@@ -178,7 +178,7 @@ test('.parse()', function(t) {
     )
   })
 
-  t.test('Too long extension', function(st) {
+  t.test('Too long extension', function (st) {
     var fixture = 'en-i-abcdefghi'
 
     st.plan(6)
@@ -226,7 +226,7 @@ test('.parse()', function(t) {
     )
   })
 
-  t.test('Empty extension', function(st) {
+  t.test('Empty extension', function (st) {
     var fixture = 'en-i-a'
 
     st.plan(6)
@@ -274,7 +274,7 @@ test('.parse()', function(t) {
     )
   })
 
-  t.test('Too long private-use', function(st) {
+  t.test('Too long private-use', function (st) {
     var fixture = 'en-x-abcdefghi'
 
     st.plan(6)
@@ -322,7 +322,7 @@ test('.parse()', function(t) {
     )
   })
 
-  t.test('Extra content', function(st) {
+  t.test('Extra content', function (st) {
     var fixture = 'abcdefghijklmnopqrstuvwxyz'
 
     st.plan(6)
