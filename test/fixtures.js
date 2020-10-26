@@ -19,10 +19,10 @@ test('fixtures', function (t) {
     var tag = path.basename(filename, path.extname(filename))
     var actual = bcp47.parse(tag, {normalize: false})
 
-    t.test(tag, function (st) {
-      st.deepEqual(actual, expected, 'should parse')
-      st.equal(bcp47.stringify(actual), tag, 'should stringify')
-      st.end()
+    t.test(tag, function (t) {
+      t.deepEqual(actual, expected, 'should parse')
+      t.equal(bcp47.stringify(actual), tag, 'should stringify')
+      t.end()
     })
   }
 })

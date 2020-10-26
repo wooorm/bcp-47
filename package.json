@@ -45,8 +45,8 @@
   },
   "scripts": {
     "format": "remark . -qfo && prettier . -w --loglevel warn && xo --fix",
-    "build-bundle": "browserify index.js -s bcp47 > bcp-47.js",
-    "build-mangle": "browserify index.js -s bcp47 -p tinyify > bcp-47.min.js",
+    "build-bundle": "browserify index.js -s bcp47 -o bcp-47.js",
+    "build-mangle": "browserify index.js -s bcp47 -p tinyify -o bcp-47.min.js",
     "build": "npm run build-bundle && npm run build-mangle",
     "test-api": "node test",
     "test-coverage": "nyc --reporter lcov tape test/index.js",
@@ -64,6 +64,16 @@
     "prettier": true,
     "esnext": false,
     "rules": {
+      "eqeqeq": [
+        "error",
+        "always",
+        {
+          "null": "ignore"
+        }
+      ],
+      "no-eq-null": "off",
+      "no-multi-assign": "off",
+      "unicorn/explicit-length-check": "off",
       "unicorn/no-fn-reference-in-iterator": "off",
       "unicorn/prefer-includes": "off"
     },
@@ -79,13 +89,7 @@
   },
   "remarkConfig": {
     "plugins": [
-      "preset-wooorm",
-      [
-        "toc",
-        {
-          "heading": "contents"
-        }
-      ]
+      "preset-wooorm"
     ]
   }
 }
