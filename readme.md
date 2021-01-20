@@ -236,9 +236,9 @@ Invoked when an error occurs.
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/bcp-47.svg
+[build-badge]: https://github.com/wooorm/bcp-47/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/wooorm/bcp-47
+[build]: https://github.com/wooorm/bcp-47/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/bcp-47.svg
 
