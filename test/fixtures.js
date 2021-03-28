@@ -3,17 +3,20 @@
 import fs from 'fs'
 import path from 'path'
 import test from 'tape'
-import not from 'not'
 import {isHidden} from 'is-hidden'
 import {parse, stringify} from '../index.js'
 
 test('fixtures', function (t) {
   var base = path.join('test', 'fixtures')
-  var files = fs.readdirSync(base).filter(not(isHidden))
+  var files = fs.readdirSync(base).filter((d) => !isHidden(d))
   var index = -1
+  /** @type {string} */
   var filename
+  /** @type {string} */
   var tag
+  /** @type {string} */
   var actual
+  /** @type {string} */
   var expected
 
   while (++index < files.length) {
