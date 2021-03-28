@@ -5,9 +5,7 @@
   "region": null,
   "variants": [],
   "extensions": [],
-  "privateuse": [
-    "whatever"
-  ],
+  "privateuse": ["whatever"],
   "irregular": null,
   "regular": null
 }

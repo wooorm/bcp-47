@@ -1,8 +1,6 @@
 {
   "language": "zh",
-  "extendedLanguageSubtags": [
-    "cmn"
-  ],
+  "extendedLanguageSubtags": ["cmn"],
   "script": "Hans",
   "region": "CN",
   "variants": [],

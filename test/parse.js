@@ -1,28 +1,26 @@
-'use strict'
-
-var test = require('tape')
-var bcp47 = require('..')
+import test from 'tape'
+import {parse} from '../index.js'
 
 test('.parse()', function (t) {
-  t.equal(typeof bcp47.parse, 'function', 'should be a method')
+  t.equal(typeof parse, 'function', 'should be a method')
 
   t.throws(function () {
-    bcp47.parse()
+    parse()
   }, 'should throw when given `undefined`')
 
   t.throws(function () {
-    bcp47.parse(null)
+    parse(null)
   }, 'should throw when given `null`')
 
   t.doesNotThrow(function () {
-    bcp47.parse({toString: toString})
+    parse({toString})
     function toString() {
       return 'en'
     }
   }, 'should coerce to a string')
 
   t.deepEqual(
-    bcp47.parse('i-klingon'),
+    parse('i-klingon'),
     {
       language: 'tlh',
       extendedLanguageSubtags: [],
@@ -38,7 +36,7 @@ test('.parse()', function (t) {
   )
 
   t.deepEqual(
-    bcp47.parse('i-klingon', {normalize: false}),
+    parse('i-klingon', {normalize: false}),
     {
       language: null,
       extendedLanguageSubtags: [],
@@ -54,7 +52,7 @@ test('.parse()', function (t) {
   )
 
   t.deepEqual(
-    bcp47.parse('i-default'),
+    parse('i-default'),
     {
       language: null,
       extendedLanguageSubtags: [],
@@ -70,7 +68,7 @@ test('.parse()', function (t) {
   )
 
   t.deepEqual(
-    bcp47.parse('zh-min'),
+    parse('zh-min'),
     {
       language: null,
       extendedLanguageSubtags: [],
@@ -91,7 +89,7 @@ test('.parse()', function (t) {
     t.plan(6)
 
     t.deepEqual(
-      bcp47.parse(fixture, {warning: warning}),
+      parse(fixture, {warning}),
       {
         language: null,
         extendedLanguageSubtags: [],
@@ -114,7 +112,7 @@ test('.parse()', function (t) {
     }
 
     t.deepEqual(
-      bcp47.parse(fixture, {forgiving: true}),
+      parse(fixture, {forgiving: true}),
       {
         language: 'en',
         extendedLanguageSubtags: [],
@@ -136,7 +134,7 @@ test('.parse()', function (t) {
     t.plan(6)
 
     t.deepEqual(
-      bcp47.parse(fixture, {warning: warning}),
+      parse(fixture, {warning}),
       {
         language: null,
         extendedLanguageSubtags: [],
@@ -162,7 +160,7 @@ test('.parse()', function (t) {
     }
 
     t.deepEqual(
-      bcp47.parse('aa-bbb-ccc-ddd-eee', {forgiving: true}),
+      parse('aa-bbb-ccc-ddd-eee', {forgiving: true}),
       {
         language: 'aa',
         extendedLanguageSubtags: ['bbb', 'ccc', 'ddd'],
@@ -184,7 +182,7 @@ test('.parse()', function (t) {
     t.plan(6)
 
     t.deepEqual(
-      bcp47.parse(fixture, {warning: warning}),
+      parse(fixture, {warning}),
       {
         language: null,
         extendedLanguageSubtags: [],
@@ -207,7 +205,7 @@ test('.parse()', function (t) {
     }
 
     t.deepEqual(
-      bcp47.parse(fixture, {forgiving: true}),
+      parse(fixture, {forgiving: true}),
       {
         language: 'en',
         extendedLanguageSubtags: [],
@@ -229,7 +227,7 @@ test('.parse()', function (t) {
     t.plan(6)
 
     t.deepEqual(
-      bcp47.parse(fixture, {warning: warning}),
+      parse(fixture, {warning}),
       {
         language: null,
         extendedLanguageSubtags: [],
@@ -255,7 +253,7 @@ test('.parse()', function (t) {
     }
 
     t.deepEqual(
-      bcp47.parse(fixture, {forgiving: true}),
+      parse(fixture, {forgiving: true}),
       {
         language: 'en',
         extendedLanguageSubtags: [],
@@ -277,7 +275,7 @@ test('.parse()', function (t) {
     t.plan(6)
 
     t.deepEqual(
-      bcp47.parse(fixture, {warning: warning}),
+      parse(fixture, {warning}),
       {
         language: null,
         extendedLanguageSubtags: [],
@@ -303,7 +301,7 @@ test('.parse()', function (t) {
     }
 
     t.deepEqual(
-      bcp47.parse(fixture, {forgiving: true}),
+      parse(fixture, {forgiving: true}),
       {
         language: 'en',
         extendedLanguageSubtags: [],
@@ -325,7 +323,7 @@ test('.parse()', function (t) {
     t.plan(6)
 
     t.deepEqual(
-      bcp47.parse(fixture, {warning: warning}),
+      parse(fixture, {warning}),
       {
         language: null,
         extendedLanguageSubtags: [],
@@ -348,7 +346,7 @@ test('.parse()', function (t) {
     }
 
     t.deepEqual(
-      bcp47.parse(fixture, {forgiving: true}),
+      parse(fixture, {forgiving: true}),
       {
         language: null,
         extendedLanguageSubtags: [],

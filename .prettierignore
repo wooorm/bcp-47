@@ -1,6 +1,2 @@
-.nyc_output/
 coverage/
 *.md
-*.json
-bcp-47.js
-bcp-47.min.js

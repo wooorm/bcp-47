@@ -7,15 +7,11 @@
   "extensions": [
     {
       "singleton": "a",
-      "extensions": [
-        "myext"
-      ]
+      "extensions": ["myext"]
     },
     {
       "singleton": "b",
-      "extensions": [
-        "another"
-      ]
+      "extensions": ["another"]
     }
   ],
   "privateuse": [],

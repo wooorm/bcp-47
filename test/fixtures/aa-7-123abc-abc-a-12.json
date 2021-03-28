@@ -7,16 +7,11 @@
   "extensions": [
     {
       "singleton": "7",
-      "extensions": [
-        "123abc",
-        "abc"
-      ]
+      "extensions": ["123abc", "abc"]
     },
     {
       "singleton": "a",
-      "extensions": [
-        "12"
-      ]
+      "extensions": ["12"]
     }
   ],
   "privateuse": [],

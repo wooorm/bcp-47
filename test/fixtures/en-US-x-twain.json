@@ -5,9 +5,7 @@
   "region": "US",
   "variants": [],
   "extensions": [],
-  "privateuse": [
-    "twain"
-  ],
+  "privateuse": ["twain"],
   "irregular": null,
   "regular": null
 }

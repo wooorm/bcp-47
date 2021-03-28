@@ -3,9 +3,7 @@
   "extendedLanguageSubtags": [],
   "script": null,
   "region": null,
-  "variants": [
-    "nedis"
-  ],
+  "variants": ["nedis"],
   "extensions": [],
   "privateuse": [],
   "irregular": null,

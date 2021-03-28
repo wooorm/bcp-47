@@ -1,10 +1,6 @@
 {
   "language": "aa",
-  "extendedLanguageSubtags": [
-    "bbb",
-    "ccc",
-    "ddd"
-  ],
+  "extendedLanguageSubtags": ["bbb", "ccc", "ddd"],
   "script": null,
   "region": null,
   "variants": [],

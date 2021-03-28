@@ -7,9 +7,7 @@
   "extensions": [
     {
       "singleton": "u",
-      "extensions": [
-        "islamcal"
-      ]
+      "extensions": ["islamcal"]
     }
   ],
   "privateuse": [],

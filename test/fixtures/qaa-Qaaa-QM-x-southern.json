@@ -5,9 +5,7 @@
   "region": "QM",
   "variants": [],
   "extensions": [],
-  "privateuse": [
-    "southern"
-  ],
+  "privateuse": ["southern"],
   "irregular": null,
   "regular": null
 }

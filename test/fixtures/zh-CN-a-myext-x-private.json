@@ -7,14 +7,10 @@
   "extensions": [
     {
       "singleton": "a",
-      "extensions": [
-        "myext"
-      ]
+      "extensions": ["myext"]
     }
   ],
-  "privateuse": [
-    "private"
-  ],
+  "privateuse": ["private"],
   "irregular": null,
   "regular": null
 }

@@ -5,9 +5,7 @@
   "region": "CH",
   "variants": [],
   "extensions": [],
-  "privateuse": [
-    "phonebk"
-  ],
+  "privateuse": ["phonebk"],
   "irregular": null,
   "regular": null
 }

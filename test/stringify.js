@@ -1,53 +1,43 @@
-'use strict'
-
-var test = require('tape')
-var bcp47 = require('..')
+import test from 'tape'
+import {stringify} from '../index.js'
 
 test('.stringify()', function (t) {
-  t.equal(typeof bcp47.stringify, 'function', 'should be a method')
+  t.equal(typeof stringify, 'function', 'should be a method')
 
   t.equal(
-    bcp47.stringify(),
+    stringify(),
     '',
     'should compile to an empty string when without `schema`'
   )
 
-  t.equal(
-    bcp47.stringify({language: 'tlh'}),
-    'tlh',
-    'should compile a language'
-  )
+  t.equal(stringify({language: 'tlh'}), 'tlh', 'should compile a language')
 
   t.equal(
-    bcp47.stringify({privateuse: ['111', 'aaaaa', 'BBB']}),
+    stringify({privateuse: ['111', 'aaaaa', 'BBB']}),
     'x-111-aaaaa-BBB',
     'should compile a private-use area'
   )
 
   t.equal(
-    bcp47.stringify({irregular: 'i-ami'}),
+    stringify({irregular: 'i-ami'}),
     'i-ami',
     'should compile an irregular'
   )
 
   t.equal(
-    bcp47.stringify({regular: 'no-bok'}),
+    stringify({regular: 'no-bok'}),
     'no-bok',
     'should compile an irregular'
   )
 
   t.equal(
-    bcp47.stringify({script: 'Latn'}),
+    stringify({script: 'Latn'}),
     '',
     'should not compile a script without language'
   )
 
   t.equal(
-    bcp47.stringify({
-      language: 'en',
-      region: 'GB',
-      extensions: [{}]
-    }),
+    stringify({language: 'en', region: 'GB', extensions: [{}]}),
     'en-GB',
     'should not compile empty extensions'
   )

@@ -5,10 +5,7 @@
   "region": null,
   "variants": [],
   "extensions": [],
-  "privateuse": [
-    "AZE",
-    "derbend"
-  ],
+  "privateuse": ["AZE", "derbend"],
   "irregular": null,
   "regular": null
 }

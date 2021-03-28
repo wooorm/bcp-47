@@ -3,11 +3,7 @@
   "extendedLanguageSubtags": [],
   "script": null,
   "region": null,
-  "variants": [
-    "b1b1b",
-    "6a8b",
-    "cccccc"
-  ],
+  "variants": ["b1b1b", "6a8b", "cccccc"],
   "extensions": [],
   "privateuse": [],
   "irregular": null,

@@ -9,6 +9,9 @@ Parse and stringify [BCP 47][spec] language tags.
 
 ## Install
 
+This package is ESM only: Node 12+ is needed to use it and it must be `import`ed
+instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -19,8 +22,8 @@ npm install bcp-47
 
 *   [Use](#use)
 *   [API](#api)
-    *   [`bcp47.parse(tag[, options])`](#bcp47parsetag-options)
-    *   [`bcp47.stringify(schema)`](#bcp47stringifyschema)
+    *   [`parse(tag[, options])`](#parsetag-options)
+    *   [`stringify(schema)`](#stringifyschema)
     *   [`schema`](#schema)
     *   [`function warning(reason, code, offset)`](#function-warningreason-code-offset)
 *   [Related](#related)
@@ -29,12 +32,12 @@ npm install bcp-47
 ## Use
 
 ```js
-var bcp47 = require('bcp-47')
+import {parse, stringify} from 'bcp-47'
 
-var schema = bcp47.parse('hy-Latn-IT-arevela')
+var schema = parse('hy-Latn-IT-arevela')
 
 console.log(schema)
-console.log(bcp47.stringify(schema))
+console.log(stringify(schema))
 ```
 
 Yields:
@@ -54,7 +57,10 @@ Yields:
 
 ## API
 
-### `bcp47.parse(tag[, options])`
+This package exports the following identifiers: `parse`, `stringify`.
+There is no default export.
+
+### `parse(tag[, options])`
 
 Parse a BCP 47 tag into a language schema.
 Note that the algorithm is case-insensitive.
@@ -90,7 +96,7 @@ When given, `warning` is invoked when an error is encountered
 
 When `tag` is `null` or `undefined`.
 
-### `bcp47.stringify(schema)`
+### `stringify(schema)`
 
 Compile a [`schema`][schema] into a BCP 47 language tag.
 
