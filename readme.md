@@ -7,34 +7,66 @@
 
 Parse and stringify [BCP 47][spec] language tags.
 
+## Contents
+
+*   [What is this?](#what-is-this)
+*   [When should I use this?](#when-should-i-use-this)
+*   [Install](#install)
+*   [Use](#use)
+*   [API](#api)
+    *   [`parse(tag[, options])`](#parsetag-options)
+    *   [`stringify(schema)`](#stringifyschema)
+    *   [`Schema`](#schema)
+    *   [`function warning(reason, code, offset)`](#function-warningreason-code-offset)
+*   [Types](#types)
+*   [Compatibility](#compatibility)
+*   [Security](#security)
+*   [Related](#related)
+*   [Contribute](#contribute)
+*   [License](#license)
+
+## What is this?
+
+This is a package that can parse BCP 47 language tags to an object representing
+them, and serialize those objects back into language tags.
+It supports a forgiving mode to handle incorrect BCP 47 tags and can emit
+warnings about problems in incorrect tags.
+
+## When should I use this?
+
+You can use this package if you need to access the data stored in BCP 47
+language tags.
+You can also use this package if you want to check (lint) or manipulate tags.
+
 ## Install
 
-This package is ESM only: Node 12+ is needed to use it and it must be `import`ed
-instead of `require`d.
-
-[npm][]:
+This package is [ESM only][esm].
+In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 
 ```sh
 npm install bcp-47
 ```
 
-## Contents
+In Deno with [Skypack][]:
 
-*   [Use](#use)
-*   [API](#api)
-    *   [`parse(tag[, options])`](#parsetag-options)
-    *   [`stringify(schema)`](#stringifyschema)
-    *   [`schema`](#schema)
-    *   [`function warning(reason, code, offset)`](#function-warningreason-code-offset)
-*   [Related](#related)
-*   [License](#license)
+```js
+import * as bcp47 from 'https://cdn.skypack.dev/bcp-47@2?dts'
+```
+
+In browsers with [Skypack][]:
+
+```html
+<script type="module">
+  import * as bcp47 from 'https://cdn.skypack.dev/bcp-47@2?min'
+</script>
+```
 
 ## Use
 
 ```js
 import {parse, stringify} from 'bcp-47'
 
-var schema = parse('hy-Latn-IT-arevela')
+const schema = parse('hy-Latn-IT-arevela')
 
 console.log(schema)
 console.log(stringify(schema))
@@ -57,40 +89,41 @@ Yields:
 
 ## API
 
-This package exports the following identifiers: `parse`, `stringify`.
+This package exports the following identifiers: `parse` and `stringify`.
 There is no default export.
 
 ### `parse(tag[, options])`
 
 Parse a BCP 47 tag into a language schema.
-Note that the algorithm is case-insensitive.
+Note that the algorithm is case insensitive.
 
 ###### `options.normalize`
 
 Whether to normalize legacy tags when possible (`boolean`, default:
-`true`).  For example, `i-klingon` does not match the BCP 47 language
-algorithm but is valid nonetheless.  It is suggested to use `tlh`
-instead (the ISO 639-3 code for Klingon).  When `normalize` is true,
-passing `i-klingon`, or other deprecated tags, is handled as if their
-suggested valid tag was given.
+`true`).
+For example, `i-klingon` does not match the BCP 47 language algorithm but is
+considered valid by BCP 47 nonetheless.
+It is suggested to use `tlh` instead (the ISO 639-3 code for Klingon).
+When `normalize` is `true`, passing `i-klingon` or other deprecated tags, is
+handled as if their suggested valid tag was given instead.
 
 ###### `options.forgiving`
 
 By default, when an error is encountered, an empty object is returned.
 When in forgiving mode, all found values up to the point of the error
-are included (`boolean`, default: `false`).  So, for example, where by
-default `en-GB-abcdefghi` an empty object is returned (as the language
-variant is too long), in `forgiving` mode the `language` of `schema` is
-populated with `en` and the `region` is populated with `GB`.
+are included (`boolean`, default: `false`).
+So, for example, where by default `en-GB-abcdefghi` an empty object is returned
+(as the language variant is too long), in `forgiving` mode the `language` of
+`schema` is populated with `en` and the `region` is populated with `GB`.
 
 ###### `options.warning`
 
-When given, `warning` is invoked when an error is encountered
+When given, `warning` is called when an error is encountered
 ([`Function`][warning]).
 
 ###### Returns
 
-[`Schema`][schema] — Parsed BCP 47 language tag.
+Parsed BCP 47 language tag ([`Schema`][schema]).
 
 ###### Throws
 
@@ -98,69 +131,70 @@ When `tag` is `null` or `undefined`.
 
 ### `stringify(schema)`
 
-Compile a [`schema`][schema] into a BCP 47 language tag.
+Compile a [`schema`][schema] to a BCP 47 language tag.
 
 ###### Returns
 
-`string` — BCP 47 language tag.
+BCP 47 language tag (`string`).
 
-### `schema`
+### `Schema`
 
-A schema may have the following properties.  A schema is deemed empty
-when it has neither `language`, `irregular`, `regular`, nor `privateuse`
-(where an empty `privateuse` array is handled as no `privateuse`, too).
+A schema represents a language tag.
+A schema is deemed empty when it has neither `language`, `irregular`, `regular`,
+nor `privateuse` (where an empty `privateuse` array is handled as no
+`privateuse` as well).
 
 ###### `schema.language`
 
-Two or three character [ISO 639][iso-639] language code, four character
-reserved language code, or 5 to 8 (inclusive) characters registered
-language subtag (`string`).  For example, `en` (English) or `cmn`
-(Mandarin Chinese).
+Two or three character [ISO 639][iso-639] language code, four character reserved
+language code, or 5 to 8 (inclusive) characters registered language subtag
+(`string`).
+For example, `en` (English) or `cmn` (Mandarin Chinese).
 
 ###### `schema.extendedLanguageSubtags`
 
-Selected three-character [ISO 639][iso-639] codes(`Array<string>`),
-such as `yue` in `zh-yue-HK` (Chinese, Cantonese, as used in Hong Kong
-SAR).
+Selected three-character [ISO 639][iso-639] codes(`Array<string>`), such as
+`yue` in `zh-yue-HK` (Chinese, Cantonese, as used in Hong Kong SAR).
 
 ###### `schema.script`
 
-Four character [ISO 15924][iso-15924] script code (`string`), such as
-`Latn` in `hy-Latn-IT-arevela` (Eastern Armenian written in Latin
-script, as used in Italy).
+Four character [ISO 15924][iso-15924] script code (`string`), such as `Latn` in
+`hy-Latn-IT-arevela` (Eastern Armenian written in Latin script, as used in
+Italy).
 
 ###### `schema.region`
 
-Two alphabetical character [ISO 3166-1][iso-3166-1] code, or three
-digit [UN M.49][un-m49] code (`string`).  For example, `CN` in
-`cmn-Hans-CN` (Mandarin Chinese, Simplified script, as used in China).
+Two alphabetical character [ISO 3166-1][iso-3166-1] code or three digit
+[UN M49][un-m49] code (`string`).
+For example, `CN` in `cmn-Hans-CN` (Mandarin Chinese, Simplified script, as used
+in China) or `419` in `es-419` (Spanish as used in Latin America and the
+Caribbean).
 
 ###### `schema.variants`
 
-5 to 8 (inclusive) character language variants (`Array<string>`), such
-as both `rozaj` and `biske` in `sl-rozaj-biske` (San Giorgio dialect
-of Resian dialect of Slovenian).
+5 to 8 (inclusive) character language variants (`Array<string>`), such as
+`rozaj` and `biske` in `sl-rozaj-biske` (San Giorgio dialect of Resian dialect
+of Slovenian).
 
 ###### `schema.extensions`
 
-List of extensions (`Array<Object>`), each an object containing a one
-character `singleton`, and a list of `extensions` (`string`).
-`singleton` cannot be `x` (case-insensitive), and `extensions` must be
-between two and eight (inclusive) characters.  For example, an extension
-would be `u-co-phonebk` in `de-DE-u-co-phonebk` (German, as used in
-Germany, using German phonebook sort order), where `u` is the `singleton`
-and `co` and `phonebk` are its extensions.
+List of extensions (`Array<Object>`), each an object containing a one character
+`singleton`, and a list of `extensions` (`string`).
+`singleton` cannot be `x` (case insensitive) and `extensions` must be between
+two and eight (inclusive) characters.
+For example, an extension would be `u-co-phonebk` in `de-DE-u-co-phonebk`
+(German, as used in Germany, using German phonebook sort order), where `u` is
+the `singleton` and `co` and `phonebk` are its extensions.
 
 ###### `schema.privateuse`
 
-List of private-use subtags (`Array<string>`), where each subtag must
-be between one and eight (inclusive) characters.
+List of private-use subtags (`Array<string>`), where each subtag must be between
+one and eight (inclusive) characters.
 
 ###### `schema.regular`
 
-One of the `regular` tags (`string`): tags which are seen as something
-different by the algorithm.
-
+One of the `regular` tags (`string`): tags that are seen as something different
+by the algorithm.
 Valid values are:
 
 *   `art-lojban`
@@ -175,9 +209,8 @@ Valid values are:
 
 ###### `schema.irregular`
 
-One of the `irregular` tags (`string`): tags which are seen as
-invalid by the algorithm).
-
+One of the `irregular` tags (`string`): tags that are seen as invalid by the
+algorithm).
 Valid values are:
 
 *   `en-GB-oed`
@@ -200,13 +233,16 @@ Valid values are:
 
 ### `function warning(reason, code, offset)`
 
-Invoked when an error occurs.
+Called when an error occurs.
 
 ###### Parameters
 
-*   `reason` (`string`) — English reason for failure
-*   `code` (`number`) — Code for failure
-*   `offset` (`number`) — Index-based position of error
+*   `reason` (`string`)
+    — English reason for failure
+*   `code` (`number`)
+    — code for failure
+*   `offset` (`number`)
+    — index-based place where the error occurred in the tag
 
 ###### Warnings
 
@@ -219,22 +255,41 @@ Invoked when an error occurs.
 | 5    | Too long private-use area, expected at most 8 characters               |
 | 6    | Found superfluous content after tag                                    |
 
+## Types
+
+This package is fully typed with [TypeScript][].
+
+## Compatibility
+
+This package is at least compatible with all maintained versions of Node.js.
+As of now, that is Node.js 12.20+, 14.14+, and 16.0+.
+It also works in Deno and modern browsers.
+
+## Security
+
+This package is safe.
+
 ## Related
 
-*   [`bcp-47-match`](https://github.com/wooorm/bcp-47-match)
-    — Match BCP 47 language tags with language ranges per RFC 4647
-*   [`bcp-47-normalize`](https://github.com/wooorm/bcp-47-normalize)
-    — Normalize, canonicalize, and format BCP 47 tags
-*   [`iso-3166`](https://github.com/wooorm/iso-3166)
+*   [`wooorm/bcp-47-match`](https://github.com/wooorm/bcp-47-match)
+    — match BCP 47 language tags with language ranges per RFC 4647
+*   [`wooorm/bcp-47-normalize`](https://github.com/wooorm/bcp-47-normalize)
+    — normalize, canonicalize, and format BCP 47 tags
+*   [`wooorm/iso-3166`](https://github.com/wooorm/iso-3166)
     — ISO 3166 codes
-*   [`iso-639-2`](https://github.com/wooorm/iso-639-2)
+*   [`wooorm/iso-639-2`](https://github.com/wooorm/iso-639-2)
     — ISO 639-2 codes
-*   [`iso-639-3`](https://github.com/wooorm/iso-639-3)
+*   [`wooorm/iso-639-3`](https://github.com/wooorm/iso-639-3)
     — ISO 639-3 codes
-*   [`iso-15924`](https://github.com/wooorm/iso-15924)
+*   [`wooorm/iso-15924`](https://github.com/wooorm/iso-15924)
     — ISO 15924 codes
-*   [`un-m49`](https://github.com/wooorm/un-m49)
+*   [`wooorm/un-m49`](https://github.com/wooorm/un-m49)
     — UN M49 codes
+
+## Contribute
+
+Yes please!
+See [How to Contribute to Open Source][contribute].
 
 ## License
 
@@ -260,9 +315,17 @@ Invoked when an error occurs.
 
 [npm]: https://docs.npmjs.com/cli/install
 
+[skypack]: https://www.skypack.dev
+
 [license]: license
 
 [author]: https://wooorm.com
+
+[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+
+[typescript]: https://www.typescriptlang.org
+
+[contribute]: https://opensource.guide/how-to-contribute/
 
 [spec]: https://tools.ietf.org/html/bcp47
 
