@@ -37,6 +37,7 @@ test('.stringify()', function (t) {
   )
 
   t.equal(
+    // @ts-expect-error: `singleton`, `extensions` missing.
     stringify({language: 'en', region: 'GB', extensions: [{}]}),
     'en-GB',
     'should not compile empty extensions'

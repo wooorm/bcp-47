@@ -1,3 +1,7 @@
+/**
+ * @typedef {import('../index.js').Schema} Schema
+ */
+
 import fs from 'node:fs'
 import path from 'node:path'
 import test from 'tape'
@@ -13,7 +17,10 @@ test('fixtures', function (t) {
     const filename = files[index]
     const tag = path.basename(filename, path.extname(filename))
     const actual = parse(tag, {normalize: false})
-    const expected = JSON.parse(fs.readFileSync(path.join(base, filename)))
+    /** @type {Schema} */
+    const expected = JSON.parse(
+      String(fs.readFileSync(path.join(base, filename)))
+    )
 
     t.deepEqual(actual, expected, 'should parse `' + tag + '`')
     t.equal(stringify(actual), tag, 'should stringify `' + tag + '`')

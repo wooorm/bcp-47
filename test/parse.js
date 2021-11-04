@@ -5,14 +5,17 @@ test('.parse()', function (t) {
   t.equal(typeof parse, 'function', 'should be a method')
 
   t.throws(function () {
+    // @ts-expect-error: `tag` missing.
     parse()
   }, 'should throw when given `undefined`')
 
   t.throws(function () {
+    // @ts-expect-error: `tag` incorrect.
     parse(null)
   }, 'should throw when given `null`')
 
   t.doesNotThrow(function () {
+    // @ts-expect-error: `tag` incorrect.
     parse({toString})
     function toString() {
       return 'en'

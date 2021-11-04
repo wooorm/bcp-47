@@ -119,7 +119,7 @@ language subtag (`string`).  For example, `en` (English) or `cmn`
 
 ###### `schema.extendedLanguageSubtags`
 
-Selected three-character [ISO 639][iso-639] codes(`Array.<string>`),
+Selected three-character [ISO 639][iso-639] codes(`Array<string>`),
 such as `yue` in `zh-yue-HK` (Chinese, Cantonese, as used in Hong Kong
 SAR).
 
@@ -137,13 +137,13 @@ digit [UN M.49][un-m49] code (`string`).  For example, `CN` in
 
 ###### `schema.variants`
 
-5 to 8 (inclusive) character language variants (`Array.<string>`), such
+5 to 8 (inclusive) character language variants (`Array<string>`), such
 as both `rozaj` and `biske` in `sl-rozaj-biske` (San Giorgio dialect
 of Resian dialect of Slovenian).
 
 ###### `schema.extensions`
 
-List of extensions (`Array.<Object>`), each an object containing a one
+List of extensions (`Array<Object>`), each an object containing a one
 character `singleton`, and a list of `extensions` (`string`).
 `singleton` cannot be `x` (case-insensitive), and `extensions` must be
 between two and eight (inclusive) characters.  For example, an extension
@@ -153,7 +153,7 @@ and `co` and `phonebk` are its extensions.
 
 ###### `schema.privateuse`
 
-List of private-use subtags (`Array.<string>`), where each subtag must
+List of private-use subtags (`Array<string>`), where each subtag must
 be between one and eight (inclusive) characters.
 
 ###### `schema.regular`
