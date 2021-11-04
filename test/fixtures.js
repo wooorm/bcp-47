@@ -8,20 +8,12 @@ test('fixtures', function (t) {
   const base = path.join('test', 'fixtures')
   const files = fs.readdirSync(base).filter((d) => !isHidden(d))
   let index = -1
-  /** @type {string} */
-  let filename
-  /** @type {string} */
-  let tag
-  /** @type {string} */
-  let actual
-  /** @type {string} */
-  let expected
 
   while (++index < files.length) {
-    filename = files[index]
-    tag = path.basename(filename, path.extname(filename))
-    actual = parse(tag, {normalize: false})
-    expected = JSON.parse(fs.readFileSync(path.join(base, filename)))
+    const filename = files[index]
+    const tag = path.basename(filename, path.extname(filename))
+    const actual = parse(tag, {normalize: false})
+    const expected = JSON.parse(fs.readFileSync(path.join(base, filename)))
 
     t.deepEqual(actual, expected, 'should parse `' + tag + '`')
     t.equal(stringify(actual), tag, 'should stringify `' + tag + '`')
