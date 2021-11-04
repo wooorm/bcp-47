@@ -84,7 +84,7 @@ test('.parse()', function (t) {
   )
 
   t.test('Too long variant', function (t) {
-    var fixture = 'en-GB-abcdefghi'
+    const fixture = 'en-GB-abcdefghi'
 
     t.plan(6)
 
@@ -129,7 +129,7 @@ test('.parse()', function (t) {
   })
 
   t.test('Too many subtags', function (t) {
-    var fixture = 'aa-bbb-ccc-ddd-eee'
+    const fixture = 'aa-bbb-ccc-ddd-eee'
 
     t.plan(6)
 
@@ -177,7 +177,7 @@ test('.parse()', function (t) {
   })
 
   t.test('Too long extension', function (t) {
-    var fixture = 'en-i-abcdefghi'
+    const fixture = 'en-i-abcdefghi'
 
     t.plan(6)
 
@@ -222,7 +222,7 @@ test('.parse()', function (t) {
   })
 
   t.test('Empty extension', function (t) {
-    var fixture = 'en-i-a'
+    const fixture = 'en-i-a'
 
     t.plan(6)
 
@@ -270,7 +270,7 @@ test('.parse()', function (t) {
   })
 
   t.test('Too long private-use', function (t) {
-    var fixture = 'en-x-abcdefghi'
+    const fixture = 'en-x-abcdefghi'
 
     t.plan(6)
 
@@ -318,7 +318,7 @@ test('.parse()', function (t) {
   })
 
   t.test('Extra content', function (t) {
-    var fixture = 'abcdefghijklmnopqrstuvwxyz'
+    const fixture = 'abcdefghijklmnopqrstuvwxyz'
 
     t.plan(6)
 

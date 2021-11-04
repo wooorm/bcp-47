@@ -1,5 +1,3 @@
-'use strict'
-
 /* eslint-disable import/no-unassigned-import */
 import './parse.js'
 import './stringify.js'
