@@ -258,6 +258,8 @@ Called when an error occurs.
 ## Types
 
 This package is fully typed with [TypeScript][].
+It additionally exports the `Schema` type, which represents the structure of
+that interface.
 
 ## Compatibility
 
