@@ -329,7 +329,7 @@ See [How to Contribute to Open Source][contribute].
 
 [contribute]: https://opensource.guide/how-to-contribute/
 
-[spec]: https://tools.ietf.org/html/bcp47
+[spec]: https://tools.ietf.org/rfc/bcp/bcp47.html
 
 [warning]: #function-warningreason-code-offset
 
