@@ -2,29 +2,34 @@
  * @typedef {import('../index.js').Schema} Schema
  */
 
-import fs from 'node:fs'
+import assert from 'node:assert/strict'
+import fs from 'node:fs/promises'
 import path from 'node:path'
-import test from 'tape'
+import test from 'node:test'
 import {isHidden} from 'is-hidden'
 import {parse, stringify} from '../index.js'
 
-test('fixtures', function (t) {
-  const base = path.join('test', 'fixtures')
-  const files = fs.readdirSync(base).filter((d) => !isHidden(d))
+/* eslint-disable no-await-in-loop */
+
+const base = new URL('fixtures/', import.meta.url)
+
+test('fixtures', async function () {
+  const files = await fs.readdir(base)
+  const applicable = files.filter((d) => !isHidden(d))
   let index = -1
 
-  while (++index < files.length) {
-    const filename = files[index]
+  while (++index < applicable.length) {
+    const filename = applicable[index]
     const tag = path.basename(filename, path.extname(filename))
     const actual = parse(tag, {normalize: false})
     /** @type {Schema} */
     const expected = JSON.parse(
-      String(fs.readFileSync(path.join(base, filename)))
+      String(await fs.readFile(new URL(filename, base)))
     )
 
-    t.deepEqual(actual, expected, 'should parse `' + tag + '`')
-    t.equal(stringify(actual), tag, 'should stringify `' + tag + '`')
+    assert.deepEqual(actual, expected, 'should parse `' + tag + '`')
+    assert.equal(stringify(actual), tag, 'should stringify `' + tag + '`')
   }
-
-  t.end()
 })
+
+/* eslint-enable no-await-in-loop */

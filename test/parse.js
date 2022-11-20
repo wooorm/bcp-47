@@ -1,20 +1,21 @@
-import test from 'tape'
+import assert from 'node:assert/strict'
+import test from 'node:test'
 import {parse} from '../index.js'
 
-test('.parse()', function (t) {
-  t.equal(typeof parse, 'function', 'should be a method')
+test('.parse()', async function (t) {
+  assert.equal(typeof parse, 'function', 'should be a method')
 
-  t.throws(function () {
+  assert.throws(function () {
     // @ts-expect-error: `tag` missing.
     parse()
   }, 'should throw when given `undefined`')
 
-  t.throws(function () {
+  assert.throws(function () {
     // @ts-expect-error: `tag` incorrect.
     parse(null)
   }, 'should throw when given `null`')
 
-  t.doesNotThrow(function () {
+  assert.doesNotThrow(function () {
     // @ts-expect-error: `tag` incorrect.
     parse({toString})
     function toString() {
@@ -22,7 +23,7 @@ test('.parse()', function (t) {
     }
   }, 'should coerce to a string')
 
-  t.deepEqual(
+  assert.deepEqual(
     parse('i-klingon'),
     {
       language: 'tlh',
@@ -38,7 +39,7 @@ test('.parse()', function (t) {
     'should normalize when possible'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     parse('i-klingon', {normalize: false}),
     {
       language: null,
@@ -54,7 +55,7 @@ test('.parse()', function (t) {
     'should not normalize when `normalize: false`'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     parse('i-default'),
     {
       language: null,
@@ -70,7 +71,7 @@ test('.parse()', function (t) {
     'should return an irregular when not normalizable'
   )
 
-  t.deepEqual(
+  assert.deepEqual(
     parse('zh-min'),
     {
       language: null,
@@ -86,12 +87,10 @@ test('.parse()', function (t) {
     'should return a regular when not normalizable'
   )
 
-  t.test('Too long variant', function (t) {
+  await t.test('Too long variant', function () {
     const fixture = 'en-GB-abcdefghi'
 
-    t.plan(6)
-
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {warning}),
       {
         language: null,
@@ -108,13 +107,16 @@ test('.parse()', function (t) {
     )
 
     function warning() {
-      t.equal(arguments[0], 'Too long variant, expected at most 8 characters')
-      t.equal(arguments[1], 1)
-      t.equal(arguments[2], 14)
-      t.equal(arguments.length, 3)
+      assert.equal(
+        arguments[0],
+        'Too long variant, expected at most 8 characters'
+      )
+      assert.equal(arguments[1], 1)
+      assert.equal(arguments[2], 14)
+      assert.equal(arguments.length, 3)
     }
 
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {forgiving: true}),
       {
         language: 'en',
@@ -131,12 +133,10 @@ test('.parse()', function (t) {
     )
   })
 
-  t.test('Too many subtags', function (t) {
+  await t.test('Too many subtags', function () {
     const fixture = 'aa-bbb-ccc-ddd-eee'
 
-    t.plan(6)
-
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {warning}),
       {
         language: null,
@@ -153,16 +153,16 @@ test('.parse()', function (t) {
     )
 
     function warning() {
-      t.equal(
+      assert.equal(
         arguments[0],
         'Too many extended language subtags, expected at most 3 subtags'
       )
-      t.equal(arguments[1], 3)
-      t.equal(arguments[2], 14)
-      t.equal(arguments.length, 3)
+      assert.equal(arguments[1], 3)
+      assert.equal(arguments[2], 14)
+      assert.equal(arguments.length, 3)
     }
 
-    t.deepEqual(
+    assert.deepEqual(
       parse('aa-bbb-ccc-ddd-eee', {forgiving: true}),
       {
         language: 'aa',
@@ -179,12 +179,10 @@ test('.parse()', function (t) {
     )
   })
 
-  t.test('Too long extension', function (t) {
+  await t.test('Too long extension', function () {
     const fixture = 'en-i-abcdefghi'
 
-    t.plan(6)
-
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {warning}),
       {
         language: null,
@@ -201,13 +199,16 @@ test('.parse()', function (t) {
     )
 
     function warning() {
-      t.equal(arguments[0], 'Too long extension, expected at most 8 characters')
-      t.equal(arguments[1], 2)
-      t.equal(arguments[2], 13)
-      t.equal(arguments.length, 3)
+      assert.equal(
+        arguments[0],
+        'Too long extension, expected at most 8 characters'
+      )
+      assert.equal(arguments[1], 2)
+      assert.equal(arguments[2], 13)
+      assert.equal(arguments.length, 3)
     }
 
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {forgiving: true}),
       {
         language: 'en',
@@ -224,12 +225,10 @@ test('.parse()', function (t) {
     )
   })
 
-  t.test('Empty extension', function (t) {
+  await t.test('Empty extension', function () {
     const fixture = 'en-i-a'
 
-    t.plan(6)
-
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {warning}),
       {
         language: null,
@@ -246,16 +245,16 @@ test('.parse()', function (t) {
     )
 
     function warning() {
-      t.equal(
+      assert.equal(
         arguments[0],
         'Empty extension, extensions must have at least 2 characters of content'
       )
-      t.equal(arguments[1], 4)
-      t.equal(arguments[2], 4)
-      t.equal(arguments.length, 3)
+      assert.equal(arguments[1], 4)
+      assert.equal(arguments[2], 4)
+      assert.equal(arguments.length, 3)
     }
 
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {forgiving: true}),
       {
         language: 'en',
@@ -272,12 +271,10 @@ test('.parse()', function (t) {
     )
   })
 
-  t.test('Too long private-use', function (t) {
+  await t.test('Too long private-use', function () {
     const fixture = 'en-x-abcdefghi'
 
-    t.plan(6)
-
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {warning}),
       {
         language: null,
@@ -294,16 +291,16 @@ test('.parse()', function (t) {
     )
 
     function warning() {
-      t.equal(
+      assert.equal(
         arguments[0],
         'Too long private-use area, expected at most 8 characters'
       )
-      t.equal(arguments[1], 5)
-      t.equal(arguments[2], 13)
-      t.equal(arguments.length, 3)
+      assert.equal(arguments[1], 5)
+      assert.equal(arguments[2], 13)
+      assert.equal(arguments.length, 3)
     }
 
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {forgiving: true}),
       {
         language: 'en',
@@ -320,12 +317,10 @@ test('.parse()', function (t) {
     )
   })
 
-  t.test('Extra content', function (t) {
+  await t.test('Extra content', function () {
     const fixture = 'abcdefghijklmnopqrstuvwxyz'
 
-    t.plan(6)
-
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {warning}),
       {
         language: null,
@@ -342,13 +337,13 @@ test('.parse()', function (t) {
     )
 
     function warning() {
-      t.equal(arguments[0], 'Found superfluous content after tag')
-      t.equal(arguments[1], 6)
-      t.equal(arguments[2], 0)
-      t.equal(arguments.length, 3)
+      assert.equal(arguments[0], 'Found superfluous content after tag')
+      assert.equal(arguments[1], 6)
+      assert.equal(arguments[2], 0)
+      assert.equal(arguments.length, 3)
     }
 
-    t.deepEqual(
+    assert.deepEqual(
       parse(fixture, {forgiving: true}),
       {
         language: null,
@@ -364,6 +359,4 @@ test('.parse()', function (t) {
       'should return untill the error when `forgiving: true`'
     )
   })
-
-  t.end()
 })
