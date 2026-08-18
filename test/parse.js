@@ -91,6 +91,57 @@ test('.parse()', async function (t) {
     'should return a regular when not normalizable'
   )
 
+  assert.deepEqual(
+    parse('de-DE-u-co-phonebk'),
+    {
+      language: 'de',
+      extendedLanguageSubtags: [],
+      script: null,
+      region: 'DE',
+      variants: [],
+      extensions: [{extensions: ['co', 'phonebk'], singleton: 'u'}],
+      privateuse: [],
+      irregular: null,
+      regular: null
+    },
+    'should accept an extension'
+  )
+
+  assert.deepEqual(
+    parse('en-a-bbb-t-ccc'),
+    {
+      language: 'en',
+      extendedLanguageSubtags: [],
+      script: null,
+      region: null,
+      variants: [],
+      extensions: [
+        {extensions: ['bbb'], singleton: 'a'},
+        {extensions: ['ccc'], singleton: 't'}
+      ],
+      privateuse: [],
+      irregular: null,
+      regular: null
+    },
+    'should accept multiple different singletons'
+  )
+
+  assert.deepEqual(
+    parse('en-a-bbb-x-a-ccc'),
+    {
+      language: 'en',
+      extendedLanguageSubtags: [],
+      script: null,
+      region: null,
+      variants: [],
+      extensions: [{extensions: ['bbb'], singleton: 'a'}],
+      privateuse: ['a', 'ccc'],
+      irregular: null,
+      regular: null
+    },
+    'should accept a singleton repeated in a private-use sequence'
+  )
+
   await t.test('Too long variant', function () {
     const fixture = 'en-GB-abcdefghi'
 
@@ -362,6 +413,53 @@ test('.parse()', async function (t) {
         region: null,
         variants: [],
         extensions: [],
+        privateuse: [],
+        irregular: null,
+        regular: null
+      },
+      'should return untill the error when `forgiving: true`'
+    )
+  })
+
+  await t.test('Duplicate singleton', function () {
+    const fixture = 'en-a-bbb-a-ccc'
+
+    assert.deepEqual(
+      parse(fixture, {warning}),
+      {
+        language: null,
+        extendedLanguageSubtags: [],
+        script: null,
+        region: null,
+        variants: [],
+        extensions: [],
+        privateuse: [],
+        irregular: null,
+        regular: null
+      },
+      'should return `null`'
+    )
+
+    /** @type {Warning} */
+    function warning(...parameters) {
+      assert.equal(
+        parameters[0],
+        'Duplicate singleton, singletons must not be repeated'
+      )
+      assert.equal(parameters[1], 7)
+      assert.equal(parameters[2], 9)
+      assert.equal(parameters.length, 3)
+    }
+
+    assert.deepEqual(
+      parse(fixture, {forgiving: true}),
+      {
+        language: 'en',
+        extendedLanguageSubtags: [],
+        script: null,
+        region: null,
+        variants: [],
+        extensions: [{extensions: ['bbb'], singleton: 'a'}],
         privateuse: [],
         irregular: null,
         regular: null
