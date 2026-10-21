@@ -279,6 +279,37 @@ test('.parse()', async function (t) {
     )
   })
 
+  await t.test('Empty private-use', function () {
+    const empty = parse('')
+    const tag = parse('en-US')
+
+    assert.deepEqual(parse('en-US-x'), empty)
+    assert.deepEqual(parse('en-US-X'), empty)
+    assert.deepEqual(parse('x'), empty)
+    assert.deepEqual(parse('en-US-x-'), empty)
+    assert.deepEqual(parse('en-US-x', {forgiving: true}), tag)
+
+    /** @type {Array<[string, number, number]>} */
+    const warnings = []
+    assert.deepEqual(parse('en-US-x', {warning}), empty)
+    assert.deepEqual(parse('x', {warning}), empty)
+    assert.deepEqual(parse('en-US-x', {forgiving: true, warning}), tag)
+    assert.deepEqual(warnings, [
+      ['Empty private-use area, expected at least 1 subtag', 7, 7],
+      ['Empty private-use area, expected at least 1 subtag', 7, 1],
+      ['Empty private-use area, expected at least 1 subtag', 7, 7]
+    ])
+
+    /** @type {Warning} */
+    function warning(...parameters) {
+      warnings.push(parameters)
+    }
+
+    assert.deepEqual(parse('x-a').privateuse, ['a'])
+    assert.deepEqual(parse('en-US-x-a').privateuse, ['a'])
+    assert.deepEqual(parse('en-US-x-a-x').privateuse, ['a', 'x'])
+  })
+
   await t.test('Too long private-use', function () {
     const fixture = 'en-x-abcdefghi'
 

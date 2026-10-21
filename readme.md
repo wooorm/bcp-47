@@ -255,6 +255,7 @@ Called when an error occurs.
 | 4    | Empty extension, extensions must have at least 2 characters of content |
 | 5    | Too long private-use area, expected at most 8 characters               |
 | 6    | Found superfluous content after tag                                    |
+| 7    | Empty private-use area, expected at least 1 subtag                     |
 
 ## Types
 
