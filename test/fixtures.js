@@ -10,7 +10,7 @@ import test from 'node:test'
 import {isHidden} from 'is-hidden'
 import {parse, stringify} from '../index.js'
 
-/* eslint-disable no-await-in-loop */
+/* eslint-disable no-await-in-loop -- fixtures are checked in order. */
 
 const base = new URL('fixtures/', import.meta.url)
 

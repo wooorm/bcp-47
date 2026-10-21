@@ -12,20 +12,29 @@ test('.parse()', async function (t) {
   assert.throws(function () {
     // @ts-expect-error: `tag` missing.
     parse()
-  }, 'should throw when given `undefined`')
+  }, /Expected string, got `undefined`/)
 
   assert.throws(function () {
     // @ts-expect-error: `tag` incorrect.
     parse(null)
-  }, 'should throw when given `null`')
+  }, /Expected string, got `null`/)
 
-  assert.doesNotThrow(function () {
+  assert.deepEqual(
     // @ts-expect-error: `tag` incorrect.
-    parse({toString})
-    function toString() {
-      return 'en'
-    }
-  }, 'should coerce to a string')
+    parse({toString}),
+    parse('en'),
+    'should coerce to a string'
+  )
+
+  /**
+   * Turn into a string.
+   *
+   * @returns {string}
+   *   Tag.
+   */
+  function toString() {
+    return 'en'
+  }
 
   assert.deepEqual(
     parse('i-klingon'),
@@ -110,7 +119,11 @@ test('.parse()', async function (t) {
       'should return `null`'
     )
 
-    /** @type {Warning} */
+    /**
+     * Check the warning.
+     *
+     * @type {Warning}
+     */
     function warning(...parameters) {
       assert.equal(
         parameters[0],
@@ -157,7 +170,11 @@ test('.parse()', async function (t) {
       'should return `null`'
     )
 
-    /** @type {Warning} */
+    /**
+     * Check the warning.
+     *
+     * @type {Warning}
+     */
     function warning(...parameters) {
       assert.equal(
         parameters[0],
@@ -204,7 +221,11 @@ test('.parse()', async function (t) {
       'should return `null`'
     )
 
-    /** @type {Warning} */
+    /**
+     * Check the warning.
+     *
+     * @type {Warning}
+     */
     function warning(...parameters) {
       assert.equal(
         parameters[0],
@@ -251,7 +272,11 @@ test('.parse()', async function (t) {
       'should return `null`'
     )
 
-    /** @type {Warning} */
+    /**
+     * Check the warning.
+     *
+     * @type {Warning}
+     */
     function warning(...parameters) {
       assert.equal(
         parameters[0],
@@ -300,7 +325,11 @@ test('.parse()', async function (t) {
       ['Empty private-use area, expected at least 1 subtag', 7, 7]
     ])
 
-    /** @type {Warning} */
+    /**
+     * Check the warning.
+     *
+     * @type {Warning}
+     */
     function warning(...parameters) {
       warnings.push(parameters)
     }
@@ -329,7 +358,11 @@ test('.parse()', async function (t) {
       'should return `null`'
     )
 
-    /** @type {Warning} */
+    /**
+     * Check the warning.
+     *
+     * @type {Warning}
+     */
     function warning(...parameters) {
       assert.equal(
         parameters[0],
@@ -376,7 +409,11 @@ test('.parse()', async function (t) {
       'should return `null`'
     )
 
-    /** @type {Warning} */
+    /**
+     * Check the warning.
+     *
+     * @type {Warning}
+     */
     function warning(...parameters) {
       assert.equal(parameters[0], 'Found superfluous content after tag')
       assert.equal(parameters[1], 6)
