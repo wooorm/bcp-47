@@ -357,6 +357,50 @@ test('.parse()', async function (t) {
     )
   })
 
+  await t.test('Dangling private-use singleton', function () {
+    const fixture = 'en-x'
+
+    assert.deepEqual(
+      parse(fixture, {warning}),
+      {
+        language: null,
+        extendedLanguageSubtags: [],
+        script: null,
+        region: null,
+        variants: [],
+        extensions: [],
+        privateuse: [],
+        irregular: null,
+        regular: null
+      },
+      'should return `null`'
+    )
+
+    /** @type {Warning} */
+    function warning(...parameters) {
+      assert.equal(parameters[0], 'Found superfluous content after tag')
+      assert.equal(parameters[1], 6)
+      assert.equal(parameters[2], 2)
+      assert.equal(parameters.length, 3)
+    }
+
+    assert.deepEqual(
+      parse(fixture, {forgiving: true}),
+      {
+        language: 'en',
+        extendedLanguageSubtags: [],
+        script: null,
+        region: null,
+        variants: [],
+        extensions: [],
+        privateuse: [],
+        irregular: null,
+        regular: null
+      },
+      'should return untill the error when `forgiving: true`'
+    )
+  })
+
   await t.test('Extra content', function () {
     const fixture = 'abcdefghijklmnopqrstuvwxyz'
 
