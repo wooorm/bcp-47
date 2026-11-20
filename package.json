@@ -21,6 +21,7 @@
     "typescript": "^6.0.0",
     "xo": "^5.0.0"
   },
+  "exports": "./index.js",
   "files": [
     "index.d.ts.map",
     "index.d.ts",
@@ -41,7 +42,6 @@
     "parse"
   ],
   "license": "MIT",
-  "main": "index.js",
   "name": "bcp-47",
   "prettier": {
     "bracketSpacing": false,
@@ -70,7 +70,6 @@
     "atLeast": 100,
     "strict": true
   },
-  "types": "index.d.ts",
   "type": "module",
   "version": "2.1.2"
 }

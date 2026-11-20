@@ -31,7 +31,6 @@ const xoConfig = [
     files: ['package.json'],
     rules: {
       'package-json/consistent-path-prefix': 'off',
-      'package-json/prefer-exports': 'off',
       'package-json/require-engines': 'off',
       'package-json/sort-files': 'off',
       'package-json/sort-properties': 'off',
