@@ -4,6 +4,7 @@
  * @typedef {import('./lib/parse.js').Options} Options
  * @typedef {import('./lib/parse.js').Regular} Regular
  * @typedef {import('./lib/parse.js').Schema} Schema
+ * @typedef {import('./lib/parse.js').Singleton} Singleton
  * @typedef {import('./lib/parse.js').Warning} Warning
  */
 

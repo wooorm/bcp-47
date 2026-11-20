@@ -19,6 +19,7 @@ Parse and stringify [BCP 47][rfc-editor-bcp-47] language tags.
   * [`Options`](#options)
   * [`Regular`](#regular)
   * [`Schema`](#schema)
+  * [`Singleton`](#singleton)
   * [`Warning`](#warning)
   * [`parse(tag[, options])`](#parsetag-options)
   * [`stringify(schema)`](#stringifyschema)
@@ -102,7 +103,8 @@ It exports the additional [TypeScript][] types
 [`Irregular`][api-irregular],
 [`Options`][api-options],
 [`Regular`][api-regular],
-[`Schema`][api-schema], and
+[`Schema`][api-schema],
+[`Singleton`][api-singleton], and
 [`Warning`][api-warning].
 
 ### `Extension`
@@ -115,8 +117,8 @@ For example, `u-co-phonebk` in `de-DE-u-co-phonebk`.
 
 * `extensions` (`Array<string>`)
   — subtags, such as `co` and `phonebk`
-* `singleton` (`string`)
-  — single character that is not `x`, such as `u`
+* `singleton` ([`Singleton`][api-singleton])
+  — singleton, such as `u`
 
 ### `Irregular`
 
@@ -215,6 +217,26 @@ A schema is deemed empty when it has neither
 * `variants` (`Array<string>`)
   — variant subtags, such as `rozaj` and `biske` in `sl-rozaj-biske`
 
+### `Singleton`
+
+Extension singleton (TypeScript type).
+
+Any lowercase ASCII letter or digit except `x`.
+
+###### Type
+
+```ts
+type Singleton =
+  | '0'
+  // …
+  | '9'
+  | 'a'
+  // …
+  | 'w'
+  | 'y'
+  | 'z'
+```
+
 ### `Warning`
 
 Called when an error occurs (TypeScript type).
@@ -250,7 +272,7 @@ Parse a BCP 47 language tag.
 
 > 👉 **Note**:
 > the algorithm is case insensitive.
-> Legacy tags are returned in their canonical casing,
+> Legacy tags and singletons are returned in their canonical casing,
 > other subtags in the casing they were given in.
 
 ###### Parameters
@@ -334,6 +356,8 @@ See [How to Contribute to Open Source][opensource-guide-contribute].
 [api-regular]: #regular
 
 [api-schema]: #schema
+
+[api-singleton]: #singleton
 
 [api-stringify]: #stringifyschema
 

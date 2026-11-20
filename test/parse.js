@@ -123,6 +123,12 @@ test('parse', async function (t) {
     assert.equal(parse('ZH-MIN').regular, 'zh-min')
   })
 
+  await t.test('should return singletons in lowercase', async function () {
+    assert.deepEqual(parse('de-DE-U-co-PHONEBK').extensions, [
+      {extensions: ['co', 'PHONEBK'], singleton: 'u'}
+    ])
+  })
+
   await t.test(
     'should return an empty schema for a too long variant',
     async function () {

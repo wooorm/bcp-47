@@ -50,6 +50,17 @@ test('stringify', async function (t) {
     }
   )
 
+  await t.test('should type `singleton`', async function () {
+    assert.equal(
+      stringify({
+        language: 'en',
+        // @ts-expect-error: `x` is not a singleton.
+        extensions: [{singleton: 'x', extensions: ['ab']}]
+      }),
+      'en-x-ab'
+    )
+  })
+
   await t.test('should not compile empty extensions', async function () {
     assert.equal(
       // @ts-expect-error: `singleton`, `extensions` missing.
