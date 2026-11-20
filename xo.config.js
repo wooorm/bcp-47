@@ -8,10 +8,12 @@ const xoConfig = [
     name: 'default',
     prettier: 'compat',
     rules: {
+      complexity: 'off',
       curly: 'off',
       'jsdoc/check-indentation': 'off',
       'jsdoc/check-line-alignment': 'off',
       'jsdoc/require-asterisk-prefix': 'off',
+      'max-depth': 'off',
       'node-test/no-conditional-assertion': 'off',
       'node-test/no-import-test-files': 'off',
       'node-test/prefer-test-context-assert': 'off',
