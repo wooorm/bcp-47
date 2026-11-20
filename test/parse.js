@@ -1,5 +1,5 @@
 /**
- * @import {Warning} from '../index.js'
+ * @import {Message} from '../index.js'
  */
 
 import assert from 'node:assert/strict'
@@ -130,9 +130,9 @@ test('parse', async function (t) {
   })
 
   await t.test(
-    'should return an empty schema for a too long variant',
+    'should return an empty schema for an empty tag',
     async function () {
-      assert.deepEqual(parse('en-GB-abcdefghi'), {
+      assert.deepEqual(parse(''), {
         language: null,
         extendedLanguageSubtags: [],
         script: null,
@@ -146,28 +146,45 @@ test('parse', async function (t) {
     }
   )
 
-  await t.test('should warn for a too long variant', async function () {
-    /** @type {Array<Parameters<Warning>>} */
-    const warnings = []
-
-    parse('en-GB-abcdefghi', {warning})
-
-    assert.deepEqual(warnings, [
-      ['Too long variant, expected at most 8 characters', 1, 14]
-    ])
-
-    /**
-     * Collect the warning.
-     *
-     * @type {Warning}
-     */
-    function warning(...parameters) {
-      warnings.push(parameters)
-    }
+  await t.test('should not throw without `onmessage`', async function () {
+    assert.deepEqual(parse('en-GB-abcdefghi'), parse(''))
   })
 
   await t.test(
-    'should return values up to a too long variant when `forgiving: true`',
+    'should return an empty schema for a too long variant',
+    async function () {
+      assert.deepEqual(parse('en-GB-abcdefghi'), parse(''))
+    }
+  )
+
+  await t.test(
+    'should emit a fatal message for a too long variant',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('en-GB-abcdefghi', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(messages, [
+        {
+          actual: 'abcdefghi',
+          fatal: true,
+          range: [6, 15],
+          reason:
+            'Unexpected variant `abcdefghi` of 9 characters, expected at most 8 characters',
+          ruleId: 'variant-too-long',
+          source: 'bcp-47'
+        }
+      ])
+    }
+  )
+
+  await t.test(
+    'should return what was found before a too long variant when `forgiving: true`',
     async function () {
       assert.deepEqual(parse('en-GB-abcdefghi', {forgiving: true}), {
         language: 'en',
@@ -186,49 +203,38 @@ test('parse', async function (t) {
   await t.test(
     'should return an empty schema for too many extended language subtags',
     async function () {
-      assert.deepEqual(parse('aa-bbb-ccc-ddd-eee'), {
-        language: null,
-        extendedLanguageSubtags: [],
-        script: null,
-        region: null,
-        variants: [],
-        extensions: [],
-        privateuse: [],
-        irregular: null,
-        regular: null
-      })
+      assert.deepEqual(parse('aa-bbb-ccc-ddd-eee'), parse(''))
     }
   )
 
   await t.test(
-    'should warn for too many extended language subtags',
+    'should emit a fatal message for too many extended language subtags',
     async function () {
-      /** @type {Array<Parameters<Warning>>} */
-      const warnings = []
+      /** @type {Array<Message>} */
+      const messages = []
 
-      parse('aa-bbb-ccc-ddd-eee', {warning})
+      parse('aa-bbb-ccc-ddd-eee', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
 
-      assert.deepEqual(warnings, [
-        [
-          'Too many extended language subtags, expected at most 3 subtags',
-          3,
-          14
-        ]
+      assert.deepEqual(messages, [
+        {
+          actual: 'eee',
+          fatal: true,
+          range: [15, 18],
+          reason:
+            'Unexpected extended language subtag `eee`, expected at most 3 extended language subtags',
+          ruleId: 'extended-language-subtags-too-many',
+          source: 'bcp-47'
+        }
       ])
-
-      /**
-       * Collect the warning.
-       *
-       * @type {Warning}
-       */
-      function warning(...parameters) {
-        warnings.push(parameters)
-      }
     }
   )
 
   await t.test(
-    'should return values up to too many extended language subtags when `forgiving: true`',
+    'should return what was found before too many extended language subtags when `forgiving: true`',
     async function () {
       assert.deepEqual(parse('aa-bbb-ccc-ddd-eee', {forgiving: true}), {
         language: 'aa',
@@ -245,44 +251,40 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for a too long extension',
+    'should return an empty schema for a too long extension subtag',
     async function () {
-      assert.deepEqual(parse('en-i-abcdefghi'), {
-        language: null,
-        extendedLanguageSubtags: [],
-        script: null,
-        region: null,
-        variants: [],
-        extensions: [],
-        privateuse: [],
-        irregular: null,
-        regular: null
-      })
+      assert.deepEqual(parse('en-i-abcdefghi'), parse(''))
     }
   )
 
-  await t.test('should warn for a too long extension', async function () {
-    /** @type {Array<Parameters<Warning>>} */
-    const warnings = []
+  await t.test(
+    'should emit a fatal message for a too long extension subtag',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
 
-    parse('en-i-abcdefghi', {warning})
+      parse('en-i-abcdefghi', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
 
-    assert.deepEqual(warnings, [
-      ['Too long extension, expected at most 8 characters', 2, 13]
-    ])
-
-    /**
-     * Collect the warning.
-     *
-     * @type {Warning}
-     */
-    function warning(...parameters) {
-      warnings.push(parameters)
+      assert.deepEqual(messages, [
+        {
+          actual: 'abcdefghi',
+          fatal: true,
+          range: [5, 14],
+          reason:
+            'Unexpected extension subtag `abcdefghi` of 9 characters, expected at most 8 characters',
+          ruleId: 'extension-too-long',
+          source: 'bcp-47'
+        }
+      ])
     }
-  })
+  )
 
   await t.test(
-    'should return values up to a too long extension when `forgiving: true`',
+    'should return what was found before a too long extension subtag when `forgiving: true`',
     async function () {
       assert.deepEqual(parse('en-i-abcdefghi', {forgiving: true}), {
         language: 'en',
@@ -301,46 +303,38 @@ test('parse', async function (t) {
   await t.test(
     'should return an empty schema for an empty extension',
     async function () {
-      assert.deepEqual(parse('en-i-a'), {
-        language: null,
-        extendedLanguageSubtags: [],
-        script: null,
-        region: null,
-        variants: [],
-        extensions: [],
-        privateuse: [],
-        irregular: null,
-        regular: null
-      })
+      assert.deepEqual(parse('en-i-a'), parse(''))
     }
   )
 
-  await t.test('should warn for an empty extension', async function () {
-    /** @type {Array<Parameters<Warning>>} */
-    const warnings = []
+  await t.test(
+    'should emit a fatal message for an empty extension',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
 
-    parse('en-i-a', {warning})
+      parse('en-i-a', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
 
-    assert.deepEqual(warnings, [
-      [
-        'Empty extension, extensions must have at least 2 characters of content',
-        4,
-        4
-      ]
-    ])
-
-    /**
-     * Collect the warning.
-     *
-     * @type {Warning}
-     */
-    function warning(...parameters) {
-      warnings.push(parameters)
+      assert.deepEqual(messages, [
+        {
+          actual: 'i',
+          fatal: true,
+          range: [3, 4],
+          reason:
+            'Unexpected empty extension `i`, expected a subtag of 2 to 8 characters after the singleton',
+          ruleId: 'extension-empty',
+          source: 'bcp-47'
+        }
+      ])
     }
-  })
+  )
 
   await t.test(
-    'should return values up to an empty extension when `forgiving: true`',
+    'should return what was found before an empty extension when `forgiving: true`',
     async function () {
       assert.deepEqual(parse('en-i-a', {forgiving: true}), {
         language: 'en',
@@ -357,47 +351,40 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for a too long private-use area',
+    'should return an empty schema for a too long private-use subtag',
     async function () {
-      assert.deepEqual(parse('en-x-abcdefghi'), {
-        language: null,
-        extendedLanguageSubtags: [],
-        script: null,
-        region: null,
-        variants: [],
-        extensions: [],
-        privateuse: [],
-        irregular: null,
-        regular: null
+      assert.deepEqual(parse('en-x-abcdefghi'), parse(''))
+    }
+  )
+
+  await t.test(
+    'should emit a fatal message for a too long private-use subtag',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('en-x-abcdefghi', {
+        onmessage(message) {
+          messages.push(message)
+        }
       })
-    }
-  )
 
-  await t.test(
-    'should warn for a too long private-use area',
-    async function () {
-      /** @type {Array<Parameters<Warning>>} */
-      const warnings = []
-
-      parse('en-x-abcdefghi', {warning})
-
-      assert.deepEqual(warnings, [
-        ['Too long private-use area, expected at most 8 characters', 5, 13]
+      assert.deepEqual(messages, [
+        {
+          actual: 'abcdefghi',
+          fatal: true,
+          range: [5, 14],
+          reason:
+            'Unexpected private-use subtag `abcdefghi` of 9 characters, expected at most 8 characters',
+          ruleId: 'private-use-too-long',
+          source: 'bcp-47'
+        }
       ])
-
-      /**
-       * Collect the warning.
-       *
-       * @type {Warning}
-       */
-      function warning(...parameters) {
-        warnings.push(parameters)
-      }
     }
   )
 
   await t.test(
-    'should return values up to a too long private-use area when `forgiving: true`',
+    'should return what was found before a too long private-use subtag when `forgiving: true`',
     async function () {
       assert.deepEqual(parse('en-x-abcdefghi', {forgiving: true}), {
         language: 'en',
@@ -414,13 +401,46 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for superfluous content',
+    'should return an empty schema for an empty private-use sequence',
     async function () {
-      assert.deepEqual(parse('abcdefghijklmnopqrstuvwxyz'), {
-        language: null,
+      assert.deepEqual(parse('en-US-x'), parse(''))
+    }
+  )
+
+  await t.test(
+    'should emit a fatal message for an empty private-use sequence',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('en-US-x', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(messages, [
+        {
+          actual: 'x',
+          fatal: true,
+          range: [6, 7],
+          reason:
+            'Unexpected empty private-use `x`, expected a subtag of 1 to 8 characters after the singleton',
+          ruleId: 'private-use-empty',
+          source: 'bcp-47'
+        }
+      ])
+    }
+  )
+
+  await t.test(
+    'should return what was found before an empty private-use sequence when `forgiving: true`',
+    async function () {
+      assert.deepEqual(parse('en-US-x', {forgiving: true}), {
+        language: 'en',
         extendedLanguageSubtags: [],
         script: null,
-        region: null,
+        region: 'US',
         variants: [],
         extensions: [],
         privateuse: [],
@@ -430,26 +450,41 @@ test('parse', async function (t) {
     }
   )
 
-  await t.test('should warn for superfluous content', async function () {
-    /** @type {Array<Parameters<Warning>>} */
-    const warnings = []
-
-    parse('abcdefghijklmnopqrstuvwxyz', {warning})
-
-    assert.deepEqual(warnings, [['Found superfluous content after tag', 6, 0]])
-
-    /**
-     * Collect the warning.
-     *
-     * @type {Warning}
-     */
-    function warning(...parameters) {
-      warnings.push(parameters)
+  await t.test(
+    'should return an empty schema for unexpected content',
+    async function () {
+      assert.deepEqual(parse('abcdefghijklmnopqrstuvwxyz'), parse(''))
     }
-  })
+  )
 
   await t.test(
-    'should return values up to superfluous content when `forgiving: true`',
+    'should emit a fatal message for unexpected content',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('abcdefghijklmnopqrstuvwxyz', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(messages, [
+        {
+          actual: 'abcdefghijklmnopqrstuvwxyz',
+          fatal: true,
+          range: [0, 26],
+          reason:
+            'Unexpected content `abcdefghijklmnopqrstuvwxyz`, expected end of tag',
+          ruleId: 'tag-unexpected-content',
+          source: 'bcp-47'
+        }
+      ])
+    }
+  )
+
+  await t.test(
+    'should return what was found before unexpected content when `forgiving: true`',
     async function () {
       assert.deepEqual(parse('abcdefghijklmnopqrstuvwxyz', {forgiving: true}), {
         language: null,
@@ -466,45 +501,99 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for an empty private-use area',
+    'should return an empty schema for an empty private-use sequence (`en-US-X`)',
     async function () {
-      const empty = parse('')
-
-      assert.deepEqual(parse('en-US-x'), empty)
-      assert.deepEqual(parse('en-US-X'), empty)
-      assert.deepEqual(parse('x'), empty)
-      assert.deepEqual(parse('en-US-x-'), empty)
+      assert.deepEqual(parse('en-US-X'), parse(''))
     }
   )
 
-  await t.test('should warn for an empty private-use area', async function () {
-    /** @type {Array<Parameters<Warning>>} */
-    const warnings = []
+  await t.test(
+    'should emit a message for an empty private-use sequence (`en-US-X`)',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
 
-    parse('en-US-x', {warning})
-    parse('x', {warning})
-    parse('en-US-x', {forgiving: true, warning})
+      parse('en-US-X', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
 
-    assert.deepEqual(warnings, [
-      ['Empty private-use area, expected at least 1 subtag', 7, 7],
-      ['Empty private-use area, expected at least 1 subtag', 7, 1],
-      ['Empty private-use area, expected at least 1 subtag', 7, 7]
-    ])
-
-    /**
-     * Collect the warning.
-     *
-     * @type {Warning}
-     */
-    function warning(...parameters) {
-      warnings.push(parameters)
+      assert.deepEqual(
+        messages.map((d) => [d.ruleId, d.actual, d.range]),
+        [['private-use-empty', 'X', [6, 7]]]
+      )
     }
-  })
+  )
 
   await t.test(
-    'should return values up to an empty private-use area when `forgiving: true`',
+    'should return an empty schema for an empty private-use sequence (`x`)',
     async function () {
-      assert.deepEqual(parse('en-US-x', {forgiving: true}), parse('en-US'))
+      assert.deepEqual(parse('x'), parse(''))
+    }
+  )
+
+  await t.test(
+    'should emit a message for an empty private-use sequence (`x`)',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('x', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(
+        messages.map((d) => [d.ruleId, d.actual, d.range]),
+        [['private-use-empty', 'x', [0, 1]]]
+      )
+    }
+  )
+
+  await t.test(
+    'should return an empty schema for an empty private-use sequence (`en-US-x-`)',
+    async function () {
+      assert.deepEqual(parse('en-US-x-'), parse(''))
+    }
+  )
+
+  await t.test(
+    'should emit a message for an empty private-use sequence (`en-US-x-`)',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('en-US-x-', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(
+        messages.map((d) => [d.ruleId, d.actual, d.range]),
+        [['private-use-empty', 'x', [6, 7]]]
+      )
+    }
+  )
+
+  await t.test(
+    'should emit a message for unexpected content after a singleton',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('en-i', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(
+        messages.map((d) => [d.ruleId, d.actual, d.range]),
+        [['tag-unexpected-content', '-i', [2, 4]]]
+      )
     }
   )
 
@@ -513,4 +602,27 @@ test('parse', async function (t) {
     assert.deepEqual(parse('en-US-x-a').privateuse, ['a'])
     assert.deepEqual(parse('en-US-x-a-x').privateuse, ['a', 'x'])
   })
+
+  await t.test(
+    'should parse a singleton repeated in private use',
+    async function () {
+      assert.deepEqual(parse('en-a-bbb-x-a-ccc').privateuse, ['a', 'ccc'])
+    }
+  )
+
+  await t.test(
+    'should not emit messages for a singleton repeated in private use',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('en-a-bbb-x-a-ccc', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(messages, [])
+    }
+  )
 })

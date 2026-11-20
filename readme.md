@@ -16,11 +16,13 @@ Parse and stringify [BCP 47][rfc-editor-bcp-47] language tags.
 * [API](#api)
   * [`Extension`](#extension)
   * [`Irregular`](#irregular)
+  * [`Message`](#message)
+  * [`OnMessage`](#onmessage)
   * [`Options`](#options)
   * [`Regular`](#regular)
+  * [`RuleId`](#ruleid)
   * [`Schema`](#schema)
   * [`Singleton`](#singleton)
-  * [`Warning`](#warning)
   * [`parse(tag[, options])`](#parsetag-options)
   * [`stringify(schema)`](#stringifyschema)
 * [Compatibility](#compatibility)
@@ -35,7 +37,7 @@ This is a package that can parse BCP 47 language tags to objects
 representing them,
 and serialize those objects back into language tags.
 It supports a forgiving mode to handle incorrect BCP 47 tags
-and can emit warnings about problems in incorrect tags.
+and reports problems in incorrect tags as structured messages.
 
 ## When should I use this?
 
@@ -101,11 +103,13 @@ There is no default export.
 It exports the additional [TypeScript][] types
 [`Extension`][api-extension],
 [`Irregular`][api-irregular],
+[`Message`][api-message],
+[`OnMessage`][api-on-message],
 [`Options`][api-options],
 [`Regular`][api-regular],
-[`Schema`][api-schema],
-[`Singleton`][api-singleton], and
-[`Warning`][api-warning].
+[`RuleId`][api-rule-id],
+[`Schema`][api-schema], and
+[`Singleton`][api-singleton].
 
 ### `Extension`
 
@@ -149,6 +153,43 @@ type Irregular =
   | 'sgn-CH-DE'
 ```
 
+### `Message`
+
+Message about a problem in a tag (TypeScript type).
+
+###### Fields
+
+* `actual` (`string`)
+  — part of the tag that is reported, such as `abcdefghi`
+* `expected` (`Array<string>`, optional)
+  — suggested values to use instead of `actual`
+* `fatal` (`boolean`)
+  — whether the tag could not be parsed;
+  `true` when it does not match the BCP 47 grammar
+  (it is not well-formed)
+* `range` (`[start: number, end: number]`)
+  — offsets of the reported part in the tag
+  (0-indexed start, and the index after the end)
+* `reason` (`string`)
+  — reason for the message, in English (uses markdown)
+* `ruleId` ([`RuleId`][api-rule-id])
+  — category of the message, such as `'variant-too-long'`
+* `source` (`'bcp-47'`)
+  — namespace of the message
+
+### `OnMessage`
+
+Called when a problem is found (TypeScript type).
+
+###### Parameters
+
+* `message` ([`Message`][api-message])
+  — message about a problem in a tag
+
+###### Returns
+
+Nothing (`undefined`).
+
 ### `Options`
 
 Configuration for [`parse`][api-parse] (TypeScript type).
@@ -156,13 +197,13 @@ Configuration for [`parse`][api-parse] (TypeScript type).
 ###### Fields
 
 * `forgiving` (`boolean`, default: `false`)
-  — keep what was found before an error,
+  — keep what was found before a fatal error,
   instead of returning an empty schema
 * `normalize` (`boolean`, default: `true`)
   — replace deprecated tags with their preferred value,
   such as `i-klingon` with `tlh`
-* `warning` ([`Warning`][api-warning], optional)
-  — called when an error is found
+* `onmessage` ([`OnMessage`][api-on-message], optional)
+  — called when a problem is found
 
 ### `Regular`
 
@@ -183,6 +224,30 @@ type Regular =
   | 'zh-min'
   | 'zh-min-nan'
   | 'zh-xiang'
+```
+
+### `RuleId`
+
+Category of a message (TypeScript type).
+
+###### Type
+
+```ts
+type RuleId =
+  // Example: `aa-bbb-ccc-ddd-eee`.
+  | 'extended-language-subtags-too-many'
+  // Example: `en-i-a`.
+  | 'extension-empty'
+  // Example: `en-i-abcdefghi`.
+  | 'extension-too-long'
+  // Example: `en-x`.
+  | 'private-use-empty'
+  // Example: `en-x-abcdefghi`.
+  | 'private-use-too-long'
+  // Example: `en-i`.
+  | 'tag-unexpected-content'
+  // Example: `en-GB-abcdefghi`.
+  | 'variant-too-long'
 ```
 
 ### `Schema`
@@ -237,35 +302,6 @@ type Singleton =
   | 'z'
 ```
 
-### `Warning`
-
-Called when an error occurs (TypeScript type).
-
-###### Parameters
-
-* `reason` (`string`)
-  — reason for failure in English
-* `code` (`number`)
-  — code for failure
-* `offset` (`number`)
-  — index of place where the error occurred in the tag
-
-###### Returns
-
-Nothing (`undefined`).
-
-###### Codes
-
-| code | reason                                                                 |
-| :--- | :--------------------------------------------------------------------- |
-| 1    | Too long variant, expected at most 8 characters                        |
-| 2    | Too long extension, expected at most 8 characters                      |
-| 3    | Too many extended language subtags, expected at most 3 subtags         |
-| 4    | Empty extension, extensions must have at least 2 characters of content |
-| 5    | Too long private-use area, expected at most 8 characters               |
-| 6    | Found superfluous content after tag                                    |
-| 7    | Empty private-use area, expected at least 1 subtag                     |
-
 ### `parse(tag[, options])`
 
 Parse a BCP 47 language tag.
@@ -274,6 +310,11 @@ Parse a BCP 47 language tag.
 > the algorithm is case insensitive.
 > Legacy tags and singletons are returned in their canonical casing,
 > other subtags in the casing they were given in.
+
+When a tag does not match the BCP 47 grammar,
+parsing stops with a fatal message,
+and an empty schema is returned
+(or what was found before the problem, in `forgiving` mode).
 
 ###### Parameters
 
@@ -349,19 +390,23 @@ See [How to Contribute to Open Source][opensource-guide-contribute].
 
 [api-irregular]: #irregular
 
+[api-message]: #message
+
+[api-on-message]: #onmessage
+
 [api-options]: #options
 
 [api-parse]: #parsetag-options
 
 [api-regular]: #regular
 
+[api-rule-id]: #ruleid
+
 [api-schema]: #schema
 
 [api-singleton]: #singleton
 
 [api-stringify]: #stringifyschema
-
-[api-warning]: #warning
 
 [badge-build-image]: https://github.com/wooorm/bcp-47/workflows/main/badge.svg
 
