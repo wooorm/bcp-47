@@ -43,7 +43,7 @@ You can also use this package if you want to check (lint) or manipulate tags.
 ## Install
 
 This package is [ESM only][github-gist-esm].
-In Node.js (version 14.14+),
+In Node.js (version 22+),
 install with [npm][npmjs-install]:
 
 ```sh
@@ -54,7 +54,7 @@ In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import {parse, stringify} from 'https://esm.sh/bcp-47@2?bundle'
+  import {parse, stringify} from 'https://esm.sh/bcp-47@3?bundle'
 </script>
 ```
 
@@ -232,8 +232,8 @@ This package is compatible with maintained versions of Node.js.
 When we cut a new major release,
 we drop support for unmaintained versions of Node.
 This means we try to keep the current release line,
-`bcp-47@2`,
-compatible with Node.js 14.14.
+`bcp-47@3`,
+compatible with Node.js 22.
 
 ## Security
 
