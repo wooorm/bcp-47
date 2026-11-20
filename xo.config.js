@@ -19,6 +19,7 @@ const xoConfig = [
       'node-test/prefer-test-context-assert': 'off',
       'prefer-arrow-callback': 'off',
       'require-unicode-regexp': 'off',
+      'unicorn/consistent-boolean-name': 'off',
       'unicorn/no-useless-recursion': 'off',
       'unicorn/prefer-code-point': 'off',
       'unicorn/prefer-simple-condition-first': 'off',

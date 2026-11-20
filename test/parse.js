@@ -625,4 +625,89 @@ test('parse', async function (t) {
       assert.deepEqual(messages, [])
     }
   )
+
+  await t.test(
+    'should parse a tag with a duplicate singleton',
+    async function () {
+      assert.deepEqual(parse('en-a-bbb-a-ccc').extensions, [
+        {extensions: ['bbb'], singleton: 'a'},
+        {extensions: ['ccc'], singleton: 'a'}
+      ])
+    }
+  )
+
+  await t.test(
+    'should emit a non-fatal message for a duplicate singleton',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('en-a-bbb-A-ccc', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(messages, [
+        {
+          actual: 'A',
+          fatal: false,
+          range: [9, 10],
+          reason:
+            'Unexpected duplicate singleton `A`, expected each singleton at most once',
+          ruleId: 'singleton-duplicate',
+          source: 'bcp-47'
+        }
+      ])
+    }
+  )
+
+  await t.test(
+    'should parse a tag with a duplicate variant',
+    async function () {
+      assert.deepEqual(parse('de-DE-1901-1901').variants, ['1901', '1901'])
+    }
+  )
+
+  await t.test(
+    'should emit a non-fatal message for a duplicate variant',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('sl-rozaj-ROZAJ', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(messages, [
+        {
+          actual: 'ROZAJ',
+          fatal: false,
+          range: [9, 14],
+          reason:
+            'Unexpected duplicate variant `ROZAJ`, expected each variant at most once',
+          ruleId: 'variant-duplicate',
+          source: 'bcp-47'
+        }
+      ])
+    }
+  )
+
+  await t.test(
+    'should not emit messages for different singletons, variants',
+    async function () {
+      /** @type {Array<Message>} */
+      const messages = []
+
+      parse('sl-rozaj-biske-a-bb-b-cc', {
+        onmessage(message) {
+          messages.push(message)
+        }
+      })
+
+      assert.deepEqual(messages, [])
+    }
+  )
 })

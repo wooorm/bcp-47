@@ -36,8 +36,13 @@ Parse and stringify [BCP 47][rfc-editor-bcp-47] language tags.
 This is a package that can parse BCP 47 language tags to objects
 representing them,
 and serialize those objects back into language tags.
-It supports a forgiving mode to handle incorrect BCP 47 tags
-and reports problems in incorrect tags as structured messages.
+It reports problems in tags as structured messages:
+fatal ones when a tag does not match the BCP 47 grammar
+(it is not *well-formed*),
+and other ones when a tag matches the grammar but breaks other rules
+(it is not *valid*),
+such as a repeated singleton or variant.
+It supports a forgiving mode to handle incorrect BCP 47 tags.
 
 ## When should I use this?
 
@@ -166,7 +171,9 @@ Message about a problem in a tag (TypeScript type).
 * `fatal` (`boolean`)
   — whether the tag could not be parsed;
   `true` when it does not match the BCP 47 grammar
-  (it is not well-formed)
+  (it is not well-formed),
+  `false` when it matches the grammar but breaks another rule
+  (it is not valid)
 * `range` (`[start: number, end: number]`)
   — offsets of the reported part in the tag
   (0-indexed start, and the index after the end)
@@ -244,8 +251,12 @@ type RuleId =
   | 'private-use-empty'
   // Example: `en-x-abcdefghi`.
   | 'private-use-too-long'
+  // Example: `en-a-bbb-a-ccc` (not fatal).
+  | 'singleton-duplicate'
   // Example: `en-i`.
   | 'tag-unexpected-content'
+  // Example: `de-DE-1901-1901` (not fatal).
+  | 'variant-duplicate'
   // Example: `en-GB-abcdefghi`.
   | 'variant-too-long'
 ```
@@ -315,6 +326,9 @@ When a tag does not match the BCP 47 grammar,
 parsing stops with a fatal message,
 and an empty schema is returned
 (or what was found before the problem, in `forgiving` mode).
+When a tag matches the grammar but breaks another rule,
+such as a repeated singleton,
+a non-fatal message is emitted and parsing continues.
 
 ###### Parameters
 
