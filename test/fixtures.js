@@ -36,6 +36,12 @@ test('fixtures', async function (t) {
         expected = JSON.parse(String(await fs.readFile(url)))
       }
 
+      // JSON has no `undefined`: add missing fields back.
+      if (expected?.type === 'language') {
+        expected.region ??= undefined
+        expected.script ??= undefined
+      }
+
       assert.deepEqual(actual, expected)
       assert.equal(stringify(actual), tag)
     })

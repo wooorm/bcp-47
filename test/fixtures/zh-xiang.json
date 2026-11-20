@@ -1,12 +1,4 @@
 {
-  "extendedLanguageSubtags": [],
-  "extensions": [],
-  "irregular": null,
-  "language": null,
-  "privateuse": [],
-  "region": null,
-  "regular": "zh-xiang",
-  "script": null,
   "type": "regular",
-  "variants": []
+  "value": "zh-xiang"
 }

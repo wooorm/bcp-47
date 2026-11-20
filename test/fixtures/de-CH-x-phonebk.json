@@ -1,12 +1,9 @@
 {
   "extendedLanguageSubtags": [],
   "extensions": [],
-  "irregular": null,
   "language": "de",
   "privateuse": ["phonebk"],
   "region": "CH",
-  "regular": null,
-  "script": null,
   "type": "language",
   "variants": []
 }

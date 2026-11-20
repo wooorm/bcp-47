@@ -1,12 +1,4 @@
 {
-  "extendedLanguageSubtags": [],
-  "extensions": [],
-  "irregular": "sgn-BE-FR",
-  "language": null,
-  "privateuse": [],
-  "region": null,
-  "regular": null,
-  "script": null,
   "type": "irregular",
-  "variants": []
+  "value": "sgn-BE-FR"
 }

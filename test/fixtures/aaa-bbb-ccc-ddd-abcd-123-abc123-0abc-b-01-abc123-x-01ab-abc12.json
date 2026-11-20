@@ -6,11 +6,9 @@
       "singleton": "b"
     }
   ],
-  "irregular": null,
   "language": "aaa",
   "privateuse": ["01ab", "abc12"],
   "region": "123",
-  "regular": null,
   "script": "abcd",
   "type": "language",
   "variants": ["abc123", "0abc"]

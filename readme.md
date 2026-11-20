@@ -18,6 +18,7 @@ Parse and stringify [BCP 47][rfc-editor-bcp-47] language tags.
   * [`Irregular`](#irregular)
   * [`IrregularSchema`](#irregularschema)
   * [`LanguageSchema`](#languageschema)
+  * [`LanguageSchemaInput`](#languageschemainput)
   * [`Message`](#message)
   * [`OnMessage`](#onmessage)
   * [`Options`](#options)
@@ -90,11 +91,9 @@ Yields:
 {
   extendedLanguageSubtags: [],
   extensions: [],
-  irregular: null,
   language: 'hy',
   privateuse: [],
   region: 'IT',
-  regular: null,
   script: 'Latn',
   type: 'language',
   variants: [ 'arevela' ]
@@ -116,6 +115,7 @@ It exports the additional [TypeScript][] types
 [`Irregular`][api-irregular],
 [`IrregularSchema`][api-irregular-schema],
 [`LanguageSchema`][api-language-schema],
+[`LanguageSchemaInput`][api-language-schema-input],
 [`Message`][api-message],
 [`OnMessage`][api-on-message],
 [`Options`][api-options],
@@ -175,12 +175,10 @@ Parsed irregular legacy tag (TypeScript type).
 
 ###### Fields
 
-* `irregular` ([`Irregular`][api-irregular])
-  — irregular legacy tag, such as `i-default`
 * `type` (`'irregular'`)
   — kind of tag
-
-All other fields are `null` or empty lists.
+* `value` ([`Irregular`][api-irregular])
+  — irregular legacy tag, such as `i-default`
 
 ### `LanguageSchema`
 
@@ -192,25 +190,48 @@ Parsed language tag (TypeScript type).
   — extended language subtags, such as `yue` in `zh-yue-HK`
 * `extensions` ([`Array<Extension>`][api-extension])
   — extensions, such as `u-co-phonebk` in `de-DE-u-co-phonebk`
-* `irregular` (`null`)
-  — no irregular legacy tag
 * `language` (`string`)
   — [ISO 639][wikipedia-iso-639] language code or registered language subtag,
   such as `en` or `cmn`
 * `privateuse` (`Array<string>`)
   — private-use subtags, such as `foo` in `en-x-foo`
-* `region` (`string` or `null`)
+* `region` (`string` or `undefined`)
   — [ISO 3166-1][wikipedia-iso-3166-1] or [UN M49][wikipedia-un-m49] code,
   such as `CN` in `cmn-Hans-CN` or `419` in `es-419`
-* `regular` (`null`)
-  — no regular legacy tag
-* `script` (`string` or `null`)
+* `script` (`string` or `undefined`)
   — [ISO 15924][wikipedia-iso-15924] script code,
   such as `Latn` in `hy-Latn-IT-arevela`
 * `type` (`'language'`)
   — kind of tag
 * `variants` (`Array<string>`)
   — variant subtags, such as `rozaj` and `biske` in `sl-rozaj-biske`
+
+### `LanguageSchemaInput`
+
+Language tag to serialize (TypeScript type).
+
+Like [`LanguageSchema`][api-language-schema],
+[`LanguageSchemaInput`][api-language-schema-input],
+but fields without a value can be omitted.
+
+###### Fields
+
+* `extendedLanguageSubtags` (`Array<string>`, optional)
+  — extended language subtags
+* `extensions` ([`Array<Extension>`][api-extension], optional)
+  — extensions
+* `language` (`string`)
+  — language
+* `privateuse` (`Array<string>`, optional)
+  — private-use subtags
+* `region` (`string`, optional)
+  — region
+* `script` (`string`, optional)
+  — script
+* `type` (`'language'`)
+  — kind of tag
+* `variants` (`Array<string>`, optional)
+  — variant subtags
 
 ### `Message`
 
@@ -277,8 +298,6 @@ Parsed private-use tag (TypeScript type).
 * `type` (`'privateuse'`)
   — kind of tag
 
-All other fields are `null` or empty lists.
-
 ### `Regular`
 
 Regular legacy tag (TypeScript type).
@@ -306,12 +325,10 @@ Parsed regular legacy tag (TypeScript type).
 
 ###### Fields
 
-* `regular` ([`Regular`][api-regular])
-  — regular legacy tag, such as `zh-min`
 * `type` (`'regular'`)
   — kind of tag
-
-All other fields are `null` or empty lists.
+* `value` ([`Regular`][api-regular])
+  — regular legacy tag, such as `zh-min`
 
 ### `RuleId`
 
@@ -346,7 +363,6 @@ type RuleId =
 Parsed tag (TypeScript type).
 
 Check `type` to find out which kind of tag it is.
-All fields are always present.
 
 ###### Type
 
@@ -363,16 +379,17 @@ type Schema =
 Tag to serialize (TypeScript type).
 
 Like [`Schema`][api-schema],
-but fields without a value can be omitted.
+but with [`LanguageSchemaInput`][api-language-schema-input]
+instead of `LanguageSchema`.
 
 ###### Type
 
 ```ts
 type SchemaInput =
-  | (Partial<IrregularSchema> & {irregular: Irregular})
-  | (Partial<LanguageSchema> & {language: string})
-  | Partial<PrivateUseSchema>
-  | (Partial<RegularSchema> & {regular: Regular})
+  | IrregularSchema
+  | LanguageSchemaInput
+  | PrivateUseSchema
+  | RegularSchema
 ```
 
 ### `Singleton`
@@ -490,6 +507,8 @@ See [How to Contribute to Open Source][opensource-guide-contribute].
 [api-irregular-schema]: #irregularschema
 
 [api-language-schema]: #languageschema
+
+[api-language-schema-input]: #languageschemainput
 
 [api-message]: #message
 

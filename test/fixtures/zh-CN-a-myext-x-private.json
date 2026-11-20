@@ -6,12 +6,9 @@
       "singleton": "a"
     }
   ],
-  "irregular": null,
   "language": "zh",
   "privateuse": ["private"],
   "region": "CN",
-  "regular": null,
-  "script": null,
   "type": "language",
   "variants": []
 }

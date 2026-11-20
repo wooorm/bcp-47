@@ -1,12 +1,4 @@
 {
-  "extendedLanguageSubtags": [],
-  "extensions": [],
-  "irregular": null,
-  "language": null,
-  "privateuse": [],
-  "region": null,
-  "regular": "zh-min-nan",
-  "script": null,
   "type": "regular",
-  "variants": []
+  "value": "zh-min-nan"
 }

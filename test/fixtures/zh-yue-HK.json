@@ -1,12 +1,9 @@
 {
   "extendedLanguageSubtags": ["yue"],
   "extensions": [],
-  "irregular": null,
   "language": "zh",
   "privateuse": [],
   "region": "HK",
-  "regular": null,
-  "script": null,
   "type": "language",
   "variants": []
 }

@@ -1,12 +1,4 @@
 {
-  "extendedLanguageSubtags": [],
-  "extensions": [],
-  "irregular": null,
-  "language": null,
-  "privateuse": [],
-  "region": null,
-  "regular": "no-bok",
-  "script": null,
   "type": "regular",
-  "variants": []
+  "value": "no-bok"
 }

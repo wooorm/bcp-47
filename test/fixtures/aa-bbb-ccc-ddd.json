@@ -1,12 +1,8 @@
 {
   "extendedLanguageSubtags": ["bbb", "ccc", "ddd"],
   "extensions": [],
-  "irregular": null,
   "language": "aa",
   "privateuse": [],
-  "region": null,
-  "regular": null,
-  "script": null,
   "type": "language",
   "variants": []
 }

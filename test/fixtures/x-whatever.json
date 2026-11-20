@@ -1,12 +1,4 @@
 {
-  "extendedLanguageSubtags": [],
-  "extensions": [],
-  "irregular": null,
-  "language": null,
   "privateuse": ["whatever"],
-  "region": null,
-  "regular": null,
-  "script": null,
-  "type": "privateuse",
-  "variants": []
+  "type": "privateuse"
 }

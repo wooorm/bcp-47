@@ -1,12 +1,9 @@
 {
   "extendedLanguageSubtags": [],
   "extensions": [],
-  "irregular": null,
   "language": "sl",
   "privateuse": [],
   "region": "IT",
-  "regular": null,
-  "script": null,
   "type": "language",
   "variants": ["nedis"]
 }

@@ -3,6 +3,7 @@
  * @typedef {import('./lib/parse.js').Irregular} Irregular
  * @typedef {import('./lib/parse.js').IrregularSchema} IrregularSchema
  * @typedef {import('./lib/parse.js').LanguageSchema} LanguageSchema
+ * @typedef {import('./lib/stringify.js').LanguageSchemaInput} LanguageSchemaInput
  * @typedef {import('./lib/parse.js').Message} Message
  * @typedef {import('./lib/parse.js').OnMessage} OnMessage
  * @typedef {import('./lib/parse.js').Options} Options
