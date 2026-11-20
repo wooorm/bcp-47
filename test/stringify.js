@@ -33,6 +33,16 @@ test('stringify', async function (t) {
     assert.equal(stringify({regular: 'no-bok'}), 'no-bok')
   })
 
+  await t.test('should type `irregular`', async function () {
+    // @ts-expect-error: test runtime behavior.
+    assert.equal(stringify({irregular: 'i-nope'}), 'i-nope')
+  })
+
+  await t.test('should type `regular`', async function () {
+    // @ts-expect-error: test runtime behavior.
+    assert.equal(stringify({regular: 'zh-nope'}), 'zh-nope')
+  })
+
   await t.test(
     'should not compile a script without language',
     async function () {

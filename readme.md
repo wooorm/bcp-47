@@ -15,7 +15,9 @@ Parse and stringify [BCP 47][rfc-editor-bcp-47] language tags.
 * [Use](#use)
 * [API](#api)
   * [`Extension`](#extension)
+  * [`Irregular`](#irregular)
   * [`Options`](#options)
+  * [`Regular`](#regular)
   * [`Schema`](#schema)
   * [`Warning`](#warning)
   * [`parse(tag[, options])`](#parsetag-options)
@@ -97,7 +99,9 @@ This package exports the identifiers
 There is no default export.
 It exports the additional [TypeScript][] types
 [`Extension`][api-extension],
+[`Irregular`][api-irregular],
 [`Options`][api-options],
+[`Regular`][api-regular],
 [`Schema`][api-schema], and
 [`Warning`][api-warning].
 
@@ -114,6 +118,35 @@ For example, `u-co-phonebk` in `de-DE-u-co-phonebk`.
 * `singleton` (`string`)
   — single character that is not `x`, such as `u`
 
+### `Irregular`
+
+Irregular legacy tag (TypeScript type).
+
+These tags do not match the BCP 47 grammar.
+
+###### Type
+
+```ts
+type Irregular =
+  | 'en-GB-oed'
+  | 'i-ami'
+  | 'i-bnn'
+  | 'i-default'
+  | 'i-enochian'
+  | 'i-hak'
+  | 'i-klingon'
+  | 'i-lux'
+  | 'i-mingo'
+  | 'i-navajo'
+  | 'i-pwn'
+  | 'i-tao'
+  | 'i-tay'
+  | 'i-tsu'
+  | 'sgn-BE-FR'
+  | 'sgn-BE-NL'
+  | 'sgn-CH-DE'
+```
+
 ### `Options`
 
 Configuration for [`parse`][api-parse] (TypeScript type).
@@ -129,6 +162,27 @@ Configuration for [`parse`][api-parse] (TypeScript type).
 * `warning` ([`Warning`][api-warning], optional)
   — called when an error is found
 
+### `Regular`
+
+Regular legacy tag (TypeScript type).
+
+These tags match the BCP 47 grammar but mean something different.
+
+###### Type
+
+```ts
+type Regular =
+  | 'art-lojban'
+  | 'cel-gaulish'
+  | 'no-bok'
+  | 'no-nyn'
+  | 'zh-guoyu'
+  | 'zh-hakka'
+  | 'zh-min'
+  | 'zh-min-nan'
+  | 'zh-xiang'
+```
+
 ### `Schema`
 
 Parsed language tag (TypeScript type).
@@ -143,7 +197,7 @@ A schema is deemed empty when it has neither
   — extended language subtags, such as `yue` in `zh-yue-HK`
 * `extensions` ([`Array<Extension>`][api-extension])
   — extensions, such as `u-co-phonebk` in `de-DE-u-co-phonebk`
-* `irregular` (`string`, optional)
+* `irregular` ([`Irregular`][api-irregular], optional)
   — irregular legacy tag, such as `i-default`
 * `language` (`string`, optional)
   — [ISO 639][wikipedia-iso-639] language code or registered language subtag,
@@ -153,7 +207,7 @@ A schema is deemed empty when it has neither
 * `region` (`string`, optional)
   — [ISO 3166-1][wikipedia-iso-3166-1] or [UN M49][wikipedia-un-m49] code,
   such as `CN` in `cmn-Hans-CN` or `419` in `es-419`
-* `regular` (`string`, optional)
+* `regular` ([`Regular`][api-regular], optional)
   — regular legacy tag, such as `zh-min`
 * `script` (`string`, optional)
   — [ISO 15924][wikipedia-iso-15924] script code,
@@ -196,6 +250,8 @@ Parse a BCP 47 language tag.
 
 > 👉 **Note**:
 > the algorithm is case insensitive.
+> Legacy tags are returned in their canonical casing,
+> other subtags in the casing they were given in.
 
 ###### Parameters
 
@@ -269,9 +325,13 @@ See [How to Contribute to Open Source][opensource-guide-contribute].
 
 [api-extension]: #extension
 
+[api-irregular]: #irregular
+
 [api-options]: #options
 
 [api-parse]: #parsetag-options
+
+[api-regular]: #regular
 
 [api-schema]: #schema
 

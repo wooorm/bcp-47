@@ -1,6 +1,8 @@
 /**
  * @typedef {import('./lib/parse.js').Extension} Extension
+ * @typedef {import('./lib/parse.js').Irregular} Irregular
  * @typedef {import('./lib/parse.js').Options} Options
+ * @typedef {import('./lib/parse.js').Regular} Regular
  * @typedef {import('./lib/parse.js').Schema} Schema
  * @typedef {import('./lib/parse.js').Warning} Warning
  */

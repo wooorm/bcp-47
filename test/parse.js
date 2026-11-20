@@ -109,6 +109,21 @@ test('parse', async function (t) {
   )
 
   await t.test(
+    'should return irregulars in canonical casing',
+    async function () {
+      assert.equal(parse('I-DEFAULT').irregular, 'i-default')
+      assert.equal(
+        parse('EN-gb-OED', {normalize: false}).irregular,
+        'en-GB-oed'
+      )
+    }
+  )
+
+  await t.test('should return regulars in canonical casing', async function () {
+    assert.equal(parse('ZH-MIN').regular, 'zh-min')
+  })
+
+  await t.test(
     'should return an empty schema for a too long variant',
     async function () {
       assert.deepEqual(parse('en-GB-abcdefghi'), {
