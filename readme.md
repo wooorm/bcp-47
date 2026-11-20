@@ -1,11 +1,11 @@
 # bcp-47
 
-[![Build][build-badge]][build]
-[![Coverage][coverage-badge]][coverage]
-[![Downloads][downloads-badge]][downloads]
-[![Size][size-badge]][size]
+[![Build][badge-build-image]][badge-build-url]
+[![Coverage][badge-coverage-image]][badge-coverage-url]
+[![Downloads][badge-downloads-image]][badge-downloads-url]
+[![Size][badge-size-image]][badge-size-url]
 
-Parse and stringify [BCP 47][spec] language tags.
+Parse and stringify [BCP 47][rfc-editor-bcp-47] language tags.
 
 ## Contents
 
@@ -40,8 +40,8 @@ You can also use this package if you want to check (lint) or manipulate tags.
 
 ## Install
 
-This package is [ESM only][esm].
-In Node.js (version 14.14+, 16.0+), install with [npm][]:
+This package is [ESM only][github-gist-esm].
+In Node.js (version 14.14+, 16.0+), install with [npm][npmjs-install]:
 
 ```sh
 npm install bcp-47
@@ -147,26 +147,27 @@ nor `privateuse` (where an empty `privateuse` array is handled as no
 
 ###### `schema.language`
 
-Two or three character [ISO 639][iso-639] language code, four character reserved
-language code, or 5 to 8 (inclusive) characters registered language subtag
-(`string`).
+Two or three character [ISO 639][wikipedia-iso-639] language code,
+four character reserved language code,
+or 5 to 8 (inclusive) characters registered language subtag (`string`).
 For example, `en` (English) or `cmn` (Mandarin Chinese).
 
 ###### `schema.extendedLanguageSubtags`
 
-Selected three-character [ISO 639][iso-639] codes (`Array<string>`), such as
-`yue` in `zh-yue-HK` (Chinese, Cantonese, as used in Hong Kong SAR).
+Selected three-character [ISO 639][wikipedia-iso-639] codes
+(`Array<string>`), such as `yue` in `zh-yue-HK`
+(Chinese, Cantonese, as used in Hong Kong SAR).
 
 ###### `schema.script`
 
-Four character [ISO 15924][iso-15924] script code (`string`), such as `Latn` in
-`hy-Latn-IT-arevela` (Eastern Armenian written in Latin script, as used in
-Italy).
+Four character [ISO 15924][wikipedia-iso-15924] script code (`string`),
+such as `Latn` in `hy-Latn-IT-arevela`
+(Eastern Armenian written in Latin script, as used in Italy).
 
 ###### `schema.region`
 
-Two alphabetical character [ISO 3166-1][iso-3166-1] code or three digit
-[UN M49][un-m49] code (`string`).
+Two alphabetical character [ISO 3166-1][wikipedia-iso-3166-1] code or
+three digit [UN M49][wikipedia-un-m49] code (`string`).
 For example, `CN` in `cmn-Hans-CN` (Mandarin Chinese, Simplified script, as used
 in China) or `419` in `es-419` (Spanish as used in Latin America and the
 Caribbean).
@@ -293,11 +294,11 @@ This package is safe.
 ## Contribute
 
 Yes please!
-See [How to Contribute to Open Source][contribute].
+See [How to Contribute to Open Source][opensource-guide-contribute].
 
 ## License
 
-[MIT][license] © [Titus Wormer][author]
+[MIT][file-license] © [Titus Wormer][wooorm]
 
 <!-- Definitions -->
 
@@ -305,42 +306,42 @@ See [How to Contribute to Open Source][contribute].
 
 [api-warning]: #function-warningreason-code-offset
 
-[author]: https://wooorm.com
+[badge-build-image]: https://github.com/wooorm/bcp-47/workflows/main/badge.svg
 
-[build]: https://github.com/wooorm/bcp-47/actions
+[badge-build-url]: https://github.com/wooorm/bcp-47/actions
 
-[build-badge]: https://github.com/wooorm/bcp-47/workflows/main/badge.svg
+[badge-coverage-image]: https://img.shields.io/codecov/c/github/wooorm/bcp-47.svg
 
-[contribute]: https://opensource.guide/how-to-contribute/
+[badge-coverage-url]: https://codecov.io/github/wooorm/bcp-47
 
-[coverage]: https://codecov.io/github/wooorm/bcp-47
+[badge-downloads-image]: https://img.shields.io/npm/dm/bcp-47.svg
 
-[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/bcp-47.svg
+[badge-downloads-url]: https://www.npmjs.com/package/bcp-47
 
-[downloads]: https://www.npmjs.com/package/bcp-47
+[badge-size-image]: https://img.shields.io/bundlejs/size/bcp-47
 
-[downloads-badge]: https://img.shields.io/npm/dm/bcp-47.svg
-
-[esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
+[badge-size-url]: https://bundlejs.com/?q=bcp-47
 
 [esmsh]: https://esm.sh
 
-[iso-15924]: https://en.wikipedia.org/wiki/ISO_15924
+[file-license]: license
 
-[iso-3166-1]: https://en.wikipedia.org/wiki/ISO_3166-1
+[github-gist-esm]: https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c
 
-[iso-639]: https://en.wikipedia.org/wiki/ISO_639
+[npmjs-install]: https://docs.npmjs.com/cli/install
 
-[license]: license
+[opensource-guide-contribute]: https://opensource.guide/how-to-contribute/
 
-[npm]: https://docs.npmjs.com/cli/install
-
-[size]: https://bundlephobia.com/result?p=bcp-47
-
-[size-badge]: https://img.shields.io/bundlephobia/minzip/bcp-47.svg
-
-[spec]: https://www.rfc-editor.org/info/bcp47/
+[rfc-editor-bcp-47]: https://www.rfc-editor.org/info/bcp47/
 
 [typescript]: https://www.typescriptlang.org
 
-[un-m49]: https://en.wikipedia.org/wiki/UN_M.49
+[wikipedia-iso-15924]: https://en.wikipedia.org/wiki/ISO_15924
+
+[wikipedia-iso-3166-1]: https://en.wikipedia.org/wiki/ISO_3166-1
+
+[wikipedia-iso-639]: https://en.wikipedia.org/wiki/ISO_639
+
+[wikipedia-un-m49]: https://en.wikipedia.org/wiki/UN_M.49
+
+[wooorm]: https://wooorm.com
