@@ -14,7 +14,7 @@ import {parse, stringify} from '../index.js'
 
 const base = new URL('fixtures/', import.meta.url)
 
-test('fixtures', async function () {
+test('fixtures', async function (t) {
   const files = await fs.readdir(base)
   const applicable = files.filter((d) => !isHidden(d))
   let index = -1
@@ -22,20 +22,23 @@ test('fixtures', async function () {
   while (++index < applicable.length) {
     const filename = applicable[index]
     const tag = path.basename(filename, path.extname(filename))
-    const actual = parse(tag, {normalize: false})
-    const url = new URL(filename, base)
-    /** @type {Schema} */
-    let expected
 
-    if ('UPDATE' in process.env) {
-      expected = actual
-      await fs.writeFile(url, JSON.stringify(expected, undefined, 2) + '\n')
-    } else {
-      expected = JSON.parse(String(await fs.readFile(url)))
-    }
+    await t.test(tag, async function () {
+      const actual = parse(tag, {normalize: false})
+      const url = new URL(filename, base)
+      /** @type {Schema} */
+      let expected
 
-    assert.deepEqual(actual, expected, 'should parse `' + tag + '`')
-    assert.equal(stringify(actual), tag, 'should stringify `' + tag + '`')
+      if ('UPDATE' in process.env) {
+        expected = actual
+        await fs.writeFile(url, JSON.stringify(expected, undefined, 2) + '\n')
+      } else {
+        expected = JSON.parse(String(await fs.readFile(url)))
+      }
+
+      assert.deepEqual(actual, expected)
+      assert.equal(stringify(actual), tag)
+    })
   }
 })
 

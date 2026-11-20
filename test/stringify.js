@@ -2,45 +2,49 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import {stringify} from '../index.js'
 
-test('.stringify()', function () {
-  assert.equal(typeof stringify, 'function', 'should be a method')
+test('stringify', async function (t) {
+  await t.test('should be a function', async function () {
+    assert.equal(typeof stringify, 'function')
+  })
 
-  assert.equal(
-    stringify(),
-    '',
-    'should compile to an empty string when without `schema`'
+  await t.test(
+    'should compile to an empty string without `schema`',
+    async function () {
+      assert.equal(stringify(), '')
+    }
   )
 
-  assert.equal(stringify({language: 'tlh'}), 'tlh', 'should compile a language')
+  await t.test('should compile a language', async function () {
+    assert.equal(stringify({language: 'tlh'}), 'tlh')
+  })
 
-  assert.equal(
-    stringify({privateuse: ['111', 'aaaaa', 'BBB']}),
-    'x-111-aaaaa-BBB',
-    'should compile a private-use area'
+  await t.test('should compile a private-use area', async function () {
+    assert.equal(
+      stringify({privateuse: ['111', 'aaaaa', 'BBB']}),
+      'x-111-aaaaa-BBB'
+    )
+  })
+
+  await t.test('should compile an irregular', async function () {
+    assert.equal(stringify({irregular: 'i-ami'}), 'i-ami')
+  })
+
+  await t.test('should compile a regular', async function () {
+    assert.equal(stringify({regular: 'no-bok'}), 'no-bok')
+  })
+
+  await t.test(
+    'should not compile a script without language',
+    async function () {
+      assert.equal(stringify({script: 'Latn'}), '')
+    }
   )
 
-  assert.equal(
-    stringify({irregular: 'i-ami'}),
-    'i-ami',
-    'should compile an irregular'
-  )
-
-  assert.equal(
-    stringify({regular: 'no-bok'}),
-    'no-bok',
-    'should compile an irregular'
-  )
-
-  assert.equal(
-    stringify({script: 'Latn'}),
-    '',
-    'should not compile a script without language'
-  )
-
-  assert.equal(
-    // @ts-expect-error: `singleton`, `extensions` missing.
-    stringify({language: 'en', region: 'GB', extensions: [{}]}),
-    'en-GB',
-    'should not compile empty extensions'
-  )
+  await t.test('should not compile empty extensions', async function () {
+    assert.equal(
+      // @ts-expect-error: `singleton`, `extensions` missing.
+      stringify({language: 'en', region: 'GB', extensions: [{}]}),
+      'en-GB'
+    )
+  })
 })
