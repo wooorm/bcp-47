@@ -1,5 +1,5 @@
 /**
- * @import {Message} from '../index.js'
+ * @import {IrregularSchema, Message} from '../index.js'
  */
 
 import assert from 'node:assert/strict'
@@ -53,7 +53,8 @@ test('parse', async function (t) {
       extensions: [],
       privateuse: [],
       irregular: null,
-      regular: null
+      regular: null,
+      type: 'language'
     })
   })
 
@@ -69,7 +70,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: 'i-klingon',
-        regular: null
+        regular: null,
+        type: 'irregular'
       })
     }
   )
@@ -86,7 +88,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: 'i-default',
-        regular: null
+        regular: null,
+        type: 'irregular'
       })
     }
   )
@@ -103,7 +106,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: 'zh-min'
+        regular: 'zh-min',
+        type: 'regular'
       })
     }
   )
@@ -129,6 +133,15 @@ test('parse', async function (t) {
     ])
   })
 
+  await t.test('should narrow on `irregular`', async function () {
+    const schema = parse('i-default')
+
+    assert.ok(schema.irregular)
+    /** @type {IrregularSchema} */
+    const irregularSchema = schema
+    assert.equal(irregularSchema.language, null)
+  })
+
   await t.test(
     'should return an empty schema for an empty tag',
     async function () {
@@ -141,7 +154,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'privateuse'
       })
     }
   )
@@ -195,7 +209,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'language'
       })
     }
   )
@@ -245,7 +260,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'language'
       })
     }
   )
@@ -295,7 +311,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'language'
       })
     }
   )
@@ -345,7 +362,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'language'
       })
     }
   )
@@ -395,7 +413,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'language'
       })
     }
   )
@@ -445,7 +464,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'language'
       })
     }
   )
@@ -495,7 +515,8 @@ test('parse', async function (t) {
         extensions: [],
         privateuse: [],
         irregular: null,
-        regular: null
+        regular: null,
+        type: 'privateuse'
       })
     }
   )

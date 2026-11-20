@@ -46,7 +46,16 @@ test('stringify', async function (t) {
   await t.test(
     'should not compile a script without language',
     async function () {
+      // @ts-expect-error: `script` needs `language`.
       assert.equal(stringify({script: 'Latn'}), '')
+    }
+  )
+
+  await t.test(
+    'should not compile other fields with an irregular',
+    async function () {
+      // @ts-expect-error: `language` cannot be used with `irregular`.
+      assert.equal(stringify({irregular: 'i-ami', language: 'en'}), 'i-ami')
     }
   )
 

@@ -7,5 +7,6 @@
   "region": "IT",
   "regular": null,
   "script": null,
+  "type": "language",
   "variants": ["nedis"]
 }
