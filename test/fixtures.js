@@ -26,7 +26,7 @@ test('fixtures', async function (t) {
     await t.test(tag, async function () {
       const actual = parse(tag, {normalize: false})
       const url = new URL(filename, base)
-      /** @type {Schema} */
+      /** @type {Schema | undefined} */
       let expected
 
       if ('UPDATE' in process.env) {

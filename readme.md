@@ -259,7 +259,7 @@ Configuration for [`parse`][api-parse] (TypeScript type).
 
 * `forgiving` (`boolean`, default: `false`)
   — keep what was found before a fatal error,
-  instead of returning an empty schema
+  instead of returning `undefined`
 * `normalize` (`boolean`, default: `true`)
   — replace deprecated tags with their preferred value,
   such as `i-klingon` with `tlh`
@@ -268,13 +268,12 @@ Configuration for [`parse`][api-parse] (TypeScript type).
 
 ### `PrivateUseSchema`
 
-Parsed private-use tag, or an empty schema (TypeScript type).
+Parsed private-use tag (TypeScript type).
 
 ###### Fields
 
-* `privateuse` (`Array<string>`)
-  — private-use subtags, such as `foo` in `x-foo`;
-  empty when nothing was parsed
+* `privateuse` (`[first: string, ...rest: Array<string>]`)
+  — private-use subtags, such as `foo` in `x-foo`
 * `type` (`'privateuse'`)
   — kind of tag
 
@@ -346,8 +345,7 @@ type RuleId =
 
 Parsed tag (TypeScript type).
 
-Check `type` to find out which kind of tag it is;
-an empty schema is a private-use schema without subtags.
+Check `type` to find out which kind of tag it is.
 All fields are always present.
 
 ###### Type
@@ -408,7 +406,7 @@ Parse a BCP 47 language tag.
 
 When a tag does not match the BCP 47 grammar,
 parsing stops with a fatal message,
-and an empty schema is returned
+and `undefined` is returned
 (or what was found before the problem, in `forgiving` mode).
 When a tag matches the grammar but breaks another rule,
 such as a repeated singleton,
@@ -423,7 +421,8 @@ a non-fatal message is emitted and parsing continues.
 
 ###### Returns
 
-Parsed BCP 47 language tag ([`Schema`][api-schema]).
+Parsed BCP 47 language tag ([`Schema`][api-schema]),
+or `undefined` when nothing was parsed.
 
 ###### Throws
 

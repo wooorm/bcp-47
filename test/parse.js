@@ -115,59 +115,45 @@ test('parse', async function (t) {
   await t.test(
     'should return irregulars in canonical casing',
     async function () {
-      assert.equal(parse('I-DEFAULT').irregular, 'i-default')
+      assert.equal(parse('I-DEFAULT')?.irregular, 'i-default')
       assert.equal(
-        parse('EN-gb-OED', {normalize: false}).irregular,
+        parse('EN-gb-OED', {normalize: false})?.irregular,
         'en-GB-oed'
       )
     }
   )
 
   await t.test('should return regulars in canonical casing', async function () {
-    assert.equal(parse('ZH-MIN').regular, 'zh-min')
+    assert.equal(parse('ZH-MIN')?.regular, 'zh-min')
   })
 
   await t.test('should return singletons in lowercase', async function () {
-    assert.deepEqual(parse('de-DE-U-co-PHONEBK').extensions, [
+    assert.deepEqual(parse('de-DE-U-co-PHONEBK')?.extensions, [
       {extensions: ['co', 'PHONEBK'], singleton: 'u'}
     ])
   })
 
-  await t.test('should narrow on `irregular`', async function () {
+  await t.test('should narrow on `type`', async function () {
     const schema = parse('i-default')
 
-    assert.ok(schema.irregular)
+    assert.strictEqual(schema?.type, 'irregular')
     /** @type {IrregularSchema} */
     const irregularSchema = schema
     assert.equal(irregularSchema.language, null)
   })
 
-  await t.test(
-    'should return an empty schema for an empty tag',
-    async function () {
-      assert.deepEqual(parse(''), {
-        language: null,
-        extendedLanguageSubtags: [],
-        script: null,
-        region: null,
-        variants: [],
-        extensions: [],
-        privateuse: [],
-        irregular: null,
-        regular: null,
-        type: 'privateuse'
-      })
-    }
-  )
+  await t.test('should return `undefined` for an empty tag', async function () {
+    assert.equal(parse(''), undefined)
+  })
 
   await t.test('should not throw without `onmessage`', async function () {
-    assert.deepEqual(parse('en-GB-abcdefghi'), parse(''))
+    assert.equal(parse('en-GB-abcdefghi'), undefined)
   })
 
   await t.test(
-    'should return an empty schema for a too long variant',
+    'should return `undefined` for a too long variant',
     async function () {
-      assert.deepEqual(parse('en-GB-abcdefghi'), parse(''))
+      assert.equal(parse('en-GB-abcdefghi'), undefined)
     }
   )
 
@@ -216,9 +202,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for too many extended language subtags',
+    'should return `undefined` for too many extended language subtags',
     async function () {
-      assert.deepEqual(parse('aa-bbb-ccc-ddd-eee'), parse(''))
+      assert.equal(parse('aa-bbb-ccc-ddd-eee'), undefined)
     }
   )
 
@@ -267,9 +253,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for a too long extension subtag',
+    'should return `undefined` for a too long extension subtag',
     async function () {
-      assert.deepEqual(parse('en-i-abcdefghi'), parse(''))
+      assert.equal(parse('en-i-abcdefghi'), undefined)
     }
   )
 
@@ -318,9 +304,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for an empty extension',
+    'should return `undefined` for an empty extension',
     async function () {
-      assert.deepEqual(parse('en-i-a'), parse(''))
+      assert.equal(parse('en-i-a'), undefined)
     }
   )
 
@@ -369,9 +355,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for a too long private-use subtag',
+    'should return `undefined` for a too long private-use subtag',
     async function () {
-      assert.deepEqual(parse('en-x-abcdefghi'), parse(''))
+      assert.equal(parse('en-x-abcdefghi'), undefined)
     }
   )
 
@@ -420,9 +406,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for an empty private-use sequence',
+    'should return `undefined` for an empty private-use sequence',
     async function () {
-      assert.deepEqual(parse('en-US-x'), parse(''))
+      assert.equal(parse('en-US-x'), undefined)
     }
   )
 
@@ -471,9 +457,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for unexpected content',
+    'should return `undefined` for unexpected content',
     async function () {
-      assert.deepEqual(parse('abcdefghijklmnopqrstuvwxyz'), parse(''))
+      assert.equal(parse('abcdefghijklmnopqrstuvwxyz'), undefined)
     }
   )
 
@@ -504,27 +490,19 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return what was found before unexpected content when `forgiving: true`',
+    'should return `undefined` when nothing was found before unexpected content, with `forgiving: true`',
     async function () {
-      assert.deepEqual(parse('abcdefghijklmnopqrstuvwxyz', {forgiving: true}), {
-        language: null,
-        extendedLanguageSubtags: [],
-        script: null,
-        region: null,
-        variants: [],
-        extensions: [],
-        privateuse: [],
-        irregular: null,
-        regular: null,
-        type: 'privateuse'
-      })
+      assert.equal(
+        parse('abcdefghijklmnopqrstuvwxyz', {forgiving: true}),
+        undefined
+      )
     }
   )
 
   await t.test(
-    'should return an empty schema for an empty private-use sequence (`en-US-X`)',
+    'should return `undefined` for an empty private-use sequence (`en-US-X`)',
     async function () {
-      assert.deepEqual(parse('en-US-X'), parse(''))
+      assert.equal(parse('en-US-X'), undefined)
     }
   )
 
@@ -548,9 +526,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for an empty private-use sequence (`x`)',
+    'should return `undefined` for an empty private-use sequence (`x`)',
     async function () {
-      assert.deepEqual(parse('x'), parse(''))
+      assert.equal(parse('x'), undefined)
     }
   )
 
@@ -574,9 +552,9 @@ test('parse', async function (t) {
   )
 
   await t.test(
-    'should return an empty schema for an empty private-use sequence (`en-US-x-`)',
+    'should return `undefined` for an empty private-use sequence (`en-US-x-`)',
     async function () {
-      assert.deepEqual(parse('en-US-x-'), parse(''))
+      assert.equal(parse('en-US-x-'), undefined)
     }
   )
 
@@ -619,15 +597,15 @@ test('parse', async function (t) {
   )
 
   await t.test('should parse private-use subtags', async function () {
-    assert.deepEqual(parse('x-a').privateuse, ['a'])
-    assert.deepEqual(parse('en-US-x-a').privateuse, ['a'])
-    assert.deepEqual(parse('en-US-x-a-x').privateuse, ['a', 'x'])
+    assert.deepEqual(parse('x-a')?.privateuse, ['a'])
+    assert.deepEqual(parse('en-US-x-a')?.privateuse, ['a'])
+    assert.deepEqual(parse('en-US-x-a-x')?.privateuse, ['a', 'x'])
   })
 
   await t.test(
     'should parse a singleton repeated in private use',
     async function () {
-      assert.deepEqual(parse('en-a-bbb-x-a-ccc').privateuse, ['a', 'ccc'])
+      assert.deepEqual(parse('en-a-bbb-x-a-ccc')?.privateuse, ['a', 'ccc'])
     }
   )
 
@@ -650,7 +628,7 @@ test('parse', async function (t) {
   await t.test(
     'should parse a tag with a duplicate singleton',
     async function () {
-      assert.deepEqual(parse('en-a-bbb-a-ccc').extensions, [
+      assert.deepEqual(parse('en-a-bbb-a-ccc')?.extensions, [
         {extensions: ['bbb'], singleton: 'a'},
         {extensions: ['ccc'], singleton: 'a'}
       ])
@@ -686,7 +664,7 @@ test('parse', async function (t) {
   await t.test(
     'should parse a tag with a duplicate variant',
     async function () {
-      assert.deepEqual(parse('de-DE-1901-1901').variants, ['1901', '1901'])
+      assert.deepEqual(parse('de-DE-1901-1901')?.variants, ['1901', '1901'])
     }
   )
 
