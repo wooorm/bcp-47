@@ -9,9 +9,12 @@ test('stringify', async function (t) {
       assert.equal(stringify(), '')
     })
 
-    await t.test('should serialize w/ `schema` of `undefined`', async function () {
-      assert.equal(stringify(undefined), '')
-    })
+    await t.test(
+      'should serialize w/ `schema` of `undefined`',
+      async function () {
+        assert.equal(stringify(undefined), '')
+      }
+    )
 
     await t.test('should fail on an unknown `type`', async function () {
       assert.throws(function () {
