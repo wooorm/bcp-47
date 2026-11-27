@@ -5,7 +5,12 @@ import {parse, stringify} from '../index.js'
 test('stringify', async function (t) {
   await t.test('main', async function (t) {
     await t.test('should serialize w/o `schema`', async function () {
+      // @ts-expect-error: test runtime behavior.
       assert.equal(stringify(), '')
+    })
+
+    await t.test('should serialize w/ `schema` of `undefined`', async function () {
+      assert.equal(stringify(undefined), '')
     })
 
     await t.test('should fail on an unknown `type`', async function () {

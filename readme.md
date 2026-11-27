@@ -431,7 +431,7 @@ a non-fatal message is emitted and parsing continues.
 
 ###### Parameters
 
-* `tag` (`string`, required)
+* `tag` (`string`)
   — BCP 47 tag to parse
 * `options` ([`Options`][api-options], optional)
   — configuration
@@ -440,10 +440,6 @@ a non-fatal message is emitted and parsing continues.
 
 Parsed BCP 47 language tag ([`Schema`][api-schema]),
 or `undefined` when nothing was parsed.
-
-###### Throws
-
-When `tag` is `null` or `undefined`.
 
 ### `stringify(schema)`
 
