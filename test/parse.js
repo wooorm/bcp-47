@@ -104,13 +104,17 @@ test('parse', async function (t) {
     assert.deepEqual(parse('ZH-MIN'), {type: 'regular', value: 'zh-min'})
   })
 
-  await t.test('should return singletons in lowercase', async function () {
-    const schema = parse('de-DE-U-co-PHONEBK')
-
-    assert.equal(schema?.type, 'language')
-    assert.deepEqual(schema.extensions, [
-      {extensions: ['co', 'PHONEBK'], singleton: 'u'}
-    ])
+  await t.test('should return canonical casing', async function () {
+    assert.deepEqual(parse('ZH-YUE-hant-hk-1901-U-CO-PHONEBK-X-FOO'), {
+      extendedLanguageSubtags: ['yue'],
+      extensions: [{extensions: ['co', 'phonebk'], singleton: 'u'}],
+      language: 'zh',
+      privateuse: ['foo'],
+      region: 'HK',
+      script: 'Hant',
+      type: 'language',
+      variants: ['1901']
+    })
   })
 
   await t.test('should narrow on `type`', async function () {

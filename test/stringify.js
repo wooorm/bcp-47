@@ -30,17 +30,6 @@ test('stringify', async function (t) {
         }, /Unexpected `value` `i-nope`, expected a known irregular tag/)
       }
     )
-
-    await t.test(
-      'should allow non-canonical casing for irregular legacy tags',
-      async function () {
-        assert.equal(
-          // @ts-expect-error: check that the runtime handles casing.
-          stringify({type: 'irregular', value: 'I-ami'}),
-          'i-ami'
-        )
-      }
-    )
   })
 
   await t.test('language', async function (t) {
@@ -264,17 +253,6 @@ test('stringify', async function (t) {
           // @ts-expect-error: test runtime behavior.
           stringify({type: 'regular', value: 'zh-nope'})
         }, /Unexpected `value` `zh-nope`, expected a known regular tag/)
-      }
-    )
-
-    await t.test(
-      'should allow non-canonical casing for regular legacy tags',
-      async function () {
-        assert.equal(
-          // @ts-expect-error: check that the runtime handles casing.
-          stringify({type: 'regular', value: 'ZH-min'}),
-          'zh-min'
-        )
       }
     )
   })

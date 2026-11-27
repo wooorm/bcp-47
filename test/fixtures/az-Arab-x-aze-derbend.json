@@ -1,9 +1,9 @@
 {
   "extendedLanguageSubtags": [],
   "extensions": [],
-  "language": "aa",
-  "privateuse": [],
-  "region": "bb",
+  "language": "az",
+  "privateuse": ["aze", "derbend"],
+  "script": "Arab",
   "type": "language",
   "variants": []
 }

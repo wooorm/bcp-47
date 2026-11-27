@@ -9,7 +9,7 @@
   "language": "aaa",
   "privateuse": ["01ab", "abc12"],
   "region": "123",
-  "script": "abcd",
+  "script": "Abcd",
   "type": "language",
   "variants": ["abc123", "0abc"]
 }

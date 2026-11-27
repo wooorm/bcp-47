@@ -418,8 +418,8 @@ Parse a BCP 47 language tag.
 
 > 👉 **Note**:
 > the algorithm is case insensitive.
-> Legacy tags and singletons are returned in their canonical casing,
-> other subtags in the casing they were given in.
+> Subtags are returned in their canonical casing
+> ([RFC 5646 § 2.1.1][rfc-editor-rfc-5646-casing]).
 
 When a tag does not match the BCP 47 grammar,
 parsing stops with a fatal message,
@@ -448,9 +448,6 @@ When `tag` is `null` or `undefined`.
 ### `stringify(schema)`
 
 Compile a language schema to a BCP 47 language tag.
-
-Legacy tags are returned in their canonical casing,
-other subtags in the casing they were given in.
 
 ###### Parameters
 
@@ -585,6 +582,8 @@ See [How to Contribute to Open Source][opensource-guide-contribute].
 [opensource-guide-contribute]: https://opensource.guide/how-to-contribute/
 
 [rfc-editor-bcp-47]: https://www.rfc-editor.org/info/bcp47/
+
+[rfc-editor-rfc-5646-casing]: https://www.rfc-editor.org/rfc/rfc5646#section-2.1.1
 
 [typescript]: https://www.typescriptlang.org
 
