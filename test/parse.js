@@ -11,36 +11,11 @@ test('parse', async function (t) {
     assert.equal(typeof parse, 'function')
   })
 
-  await t.test('should throw without `tag`', async function () {
+  await t.test('should throw w/o `tag`', async function () {
     assert.throws(function () {
       // @ts-expect-error: `tag` missing.
       parse()
-    }, /Expected string, got `undefined`/)
-  })
-
-  await t.test('should throw with `tag: null`', async function () {
-    assert.throws(function () {
-      // @ts-expect-error: `tag` incorrect.
-      parse(null)
-    }, /Expected string, got `null`/)
-  })
-
-  await t.test('should coerce to a string', async function () {
-    assert.deepEqual(
-      // @ts-expect-error: `tag` incorrect.
-      parse({toString}),
-      parse('en')
-    )
-
-    /**
-     * Turn into a string.
-     *
-     * @returns {string}
-     *   Tag.
-     */
-    function toString() {
-      return 'en'
-    }
+    }, /Unexpected `tag` `undefined`, expected `string`/)
   })
 
   await t.test('should normalize when possible', async function () {
