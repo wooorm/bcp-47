@@ -449,6 +449,9 @@ When `tag` is `null` or `undefined`.
 
 Compile a language schema to a BCP 47 language tag.
 
+Legacy tags are returned in their canonical casing,
+other subtags in the casing they were given in.
+
 ###### Parameters
 
 * `schema` ([`SchemaInput`][api-schema-input], optional)
@@ -457,6 +460,13 @@ Compile a language schema to a BCP 47 language tag.
 ###### Returns
 
 BCP 47 language tag (`string`).
+
+###### Throws
+
+When `schema` would not make a well-formed tag,
+such as an unknown legacy tag,
+a `region` of 3 letters,
+or a `singleton` of `x`.
 
 ## Compatibility
 

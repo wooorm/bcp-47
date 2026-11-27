@@ -14,6 +14,7 @@ const xoConfig = [
       'jsdoc/check-line-alignment': 'off',
       'jsdoc/require-asterisk-prefix': 'off',
       'max-depth': 'off',
+      'no-shadow': 'off',
       'node-test/no-conditional-assertion': 'off',
       'node-test/no-import-test-files': 'off',
       'node-test/prefer-test-context-assert': 'off',
